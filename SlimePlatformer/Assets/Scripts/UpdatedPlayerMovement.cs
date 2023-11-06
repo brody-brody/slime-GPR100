@@ -14,8 +14,7 @@ public class UpdatedPlayerMovement : MonoBehaviour
 
     // Jump fields
     [SerializeField] private float 
-        jumpForce = 5.0f, 
-        gravityStrength = 9.81f;
+        jumpForce = 9.81f;
 
     // Dash fields
     [SerializeField] private float 
@@ -34,6 +33,9 @@ public class UpdatedPlayerMovement : MonoBehaviour
 
     private Direction direction;
     private bool leaveGroundFlag = false;
+
+    private bool canResetJumpFlag;
+    private bool jumpFlag;
 
     Vector2 vel;
 
@@ -55,31 +57,40 @@ public class UpdatedPlayerMovement : MonoBehaviour
         // Get the vector perpendicular to the last normal vector and multiply it by the players input and the base speed
         Vector2 up = lastNormal;
         Vector2 forward = -Vector2.Perpendicular(lastNormal) * (int)direction;
-
         Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 dir = -up * 0.6f;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpFlag = true;
+            if (lastNormal != Vector2.down)
+            {
+                rb.velocity = Vector2.zero;
+                rb.AddForce(up * jumpForce, ForceMode2D.Impulse);
+            }
+        }
+
+        if (jumpFlag) return;
 
         // This raycast essentially checks both edges of the player's bottom face (respective to the normal of the last touched surface)
         if (!Physics2D.Raycast(playerPos + (-up * 0.5f + forward * 0.5f), dir, 0.55f, surfaceLayer) && !Physics2D.Raycast(playerPos + (-up * 0.5f + forward * -0.5f), dir, 0.55f, surfaceLayer) && !leaveGroundFlag && xInput != 0)
         {
+            // Create a new ray starting from the corner of player and try to find the next surface
             Ray raycast = new Ray(playerPos + (-up * 0.6f + forward * -0.45f), new Vector2(-Vector2.Perpendicular(-lastNormal).x * (int)direction, -Vector2.Perpendicular(-lastNormal).y * (int)direction));
-
-            //Debug.DrawRay(raycast.origin, raycast.direction * 0.5f, Color.magenta, 0.5f);
             RaycastHit2D rayHit = Physics2D.Raycast(raycast.origin, raycast.direction, 0.5f, surfaceLayer);
 
-            transform.position = rayHit.point + (-up * -0.5f + forward * 0.5f);
+            // snap to the found surface
+            if (rayHit.collider != null)
+            {
+                transform.position = rayHit.point + (-up * -0.5f + forward * 0.5f);
 
-            //Debug.DrawRay(rayHit.point, Vector2.up, Color.white, 2.0f);
-
-            // This could be whats causing the problem. This line is attempting to "wrap" the normal to match the next expected surface. This wouldn't work on weird angles, so be careful with level design
-            lastNormal = new Vector2(Vector2.Perpendicular(-lastNormal).x * (int)direction, Vector2.Perpendicular(-lastNormal).y * (int)direction);
-            Debug.DrawRay(transform.position, lastNormal, Color.yellow, 2.0f);
-
-
+                // set the new normal to use in velocity calculations to wrap around the surface
+                lastNormal = new Vector2(Vector2.Perpendicular(-lastNormal).x * (int)direction, Vector2.Perpendicular(-lastNormal).y * (int)direction);
+            }
 
             // set a flag so the normal doesn't get over
             leaveGroundFlag = true;
-            Invoke(nameof(ResetGroundFlag), 0.2f);
+            Invoke(nameof(ResetGroundFlag), 0.05f);
         }
 
         // Set the velocity variable
@@ -89,6 +100,15 @@ public class UpdatedPlayerMovement : MonoBehaviour
     // Physics forces and velocity changes should take place in the FixedUpdate() loop
     private void FixedUpdate()
     {
+        if (jumpFlag)
+        {
+            rb.gravityScale = 3;
+            return;
+        }
+        else {
+            rb.gravityScale = 0;
+        }
+
         // set the rigidbody velocity   
         rb.velocity = vel;
     }
@@ -98,10 +118,16 @@ public class UpdatedPlayerMovement : MonoBehaviour
         leaveGroundFlag = false;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        jumpFlag = false;
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (leaveGroundFlag) return;
-
+        if (jumpFlag) return;
+        
         isGrounded = true;
 
         // get the last normal

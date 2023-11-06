@@ -60,15 +60,26 @@ public class UpdatedPlayerMovement : MonoBehaviour
         Vector2 dir = -up * 0.6f;
 
         // This raycast essentially checks both edges of the player's bottom face (respective to the normal of the last touched surface)
-        if (!Physics2D.Raycast(playerPos + (-up * 0.5f + forward * 0.5f), dir, 0.55f, surfaceLayer) && !Physics2D.Raycast(playerPos + (-up * 0.5f + forward * -0.5f), dir, 0.55f, surfaceLayer) && !leaveGroundFlag)
+        if (!Physics2D.Raycast(playerPos + (-up * 0.5f + forward * 0.5f), dir, 0.55f, surfaceLayer) && !Physics2D.Raycast(playerPos + (-up * 0.5f + forward * -0.5f), dir, 0.55f, surfaceLayer) && !leaveGroundFlag && xInput != 0)
         {
+            Ray raycast = new Ray(playerPos + (-up * 0.6f + forward * -0.45f), new Vector2(-Vector2.Perpendicular(-lastNormal).x * (int)direction, -Vector2.Perpendicular(-lastNormal).y * (int)direction));
+
+            //Debug.DrawRay(raycast.origin, raycast.direction * 0.5f, Color.magenta, 0.5f);
+            RaycastHit2D rayHit = Physics2D.Raycast(raycast.origin, raycast.direction, 0.5f, surfaceLayer);
+
+            transform.position = rayHit.point + (-up * -0.5f + forward * 0.5f);
+
+            //Debug.DrawRay(rayHit.point, Vector2.up, Color.white, 2.0f);
+
             // This could be whats causing the problem. This line is attempting to "wrap" the normal to match the next expected surface. This wouldn't work on weird angles, so be careful with level design
             lastNormal = new Vector2(Vector2.Perpendicular(-lastNormal).x * (int)direction, Vector2.Perpendicular(-lastNormal).y * (int)direction);
             Debug.DrawRay(transform.position, lastNormal, Color.yellow, 2.0f);
 
+
+
             // set a flag so the normal doesn't get over
             leaveGroundFlag = true;
-            Invoke(nameof(ResetGroundFlag), 0.1f);
+            Invoke(nameof(ResetGroundFlag), 0.2f);
         }
 
         // Set the velocity variable

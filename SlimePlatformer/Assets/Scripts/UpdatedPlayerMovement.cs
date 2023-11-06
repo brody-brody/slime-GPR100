@@ -1,9 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UpdatedPlayerMovement : MonoBehaviour
 {
+    public enum Direction
+    {
+        Left = -1,
+        Right = 1
+    }
     // For team members who don't know what SerializeField does:
     // This is a PropertyAttribute. The [SerializeField] attribute makes it so private fields can be accessed and changed in the inspector while still being inaccessible to other scripts.
     [SerializeField]
@@ -23,14 +26,16 @@ public class UpdatedPlayerMovement : MonoBehaviour
     [SerializeField] private float surfaceCheckOffset = 0.5f; // Assuming that the player is 1x1 units, this will be used to check nearby surfaces along each side of the player
     [SerializeField] private LayerMask surfaceLayer;
 
-    private Vector2 lastNormal; // normal vector of the last surface
+    private Vector2 lastNormal = Vector2.up; // normal vector of the last surface
     private float xInput; // stores the players input
     private bool isGrounded;
 
     private Rigidbody2D rb;
 
-    private bool isDashing;
+    private Direction direction;
+    private bool leaveGroundFlag = false;
 
+    Vector2 vel;
 
     private void Awake()
     {
@@ -43,59 +48,56 @@ public class UpdatedPlayerMovement : MonoBehaviour
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButton("Jump") && !isDashing)
-            if (Input.GetButtonDown("Vertical"))
-            {
-                Vector2 direction = new(0, Input.GetAxisRaw("Vertical"));
-                Dash(direction);
-            }
+        if (xInput > 0) direction = Direction.Right;
+        else if (xInput < 0) direction = Direction.Left;
+
+        // Get the vector perpendicular to the last normal vector and multiply it by the players input and the base speed
+        Vector2 up = lastNormal;
+        Vector2 forward = Vector2.Perpendicular(lastNormal);
+
+        Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 dir = -up * 0.6f;
+
+        if (!Physics2D.Raycast(playerPos + (-up * 0.5f + forward * 0.5f), dir, 0.55f, surfaceLayer) && !Physics2D.Raycast(playerPos + (-up * 0.5f + forward * -0.5f), dir, 0.55f, surfaceLayer) && !leaveGroundFlag)
+        {
+            lastNormal = new Vector2(Vector2.Perpendicular(-lastNormal).x * (int)direction, Vector2.Perpendicular(-lastNormal).y * (int)direction);
+            //lastNormal = 
+            Debug.DrawRay(transform.position, lastNormal, Color.yellow, 2.0f);
+
+            leaveGroundFlag = true;
+            Invoke(nameof(ResetGroundFlag), 0.1f);
+        }
     }
 
     // Physics forces and velocity changes should take place in the FixedUpdate() loop
     private void FixedUpdate()
     {
-        
+        vel = new(Vector2.Perpendicular(lastNormal).x * -xInput * baseSpeed, Vector2.Perpendicular(lastNormal).y * -xInput * baseSpeed);
+        rb.velocity = vel;
+    }
 
-        //If isDashing is true, it prevents the code following it from running
-        if (isDashing)
-            return;
-
-        // Get the vector perpendicular to the last normal vector and multiply it by the players input and the base speed
-        rb.velocity = new(Vector2.Perpendicular(lastNormal).x * -xInput * baseSpeed, Vector2.Perpendicular(lastNormal).y * -xInput * baseSpeed);
+    private void ResetGroundFlag()
+    {
+        leaveGroundFlag = false;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //If the normal is facing any way but up it inverses the horizontal controls
-        if (collision.GetContact(0).normal != Vector2.up)
-            lastNormal = -collision.GetContact(0).normal;
-        else 
-            lastNormal = collision.GetContact(0).normal;
-        
+        if (leaveGroundFlag) return;
+
+        isGrounded = true;
+
+        // get the last normal
+        lastNormal = collision.contacts[0].normal;
 
         // You can see this debug ray by enabling Gizmos in Play Mode
         Debug.DrawRay(transform.position, lastNormal * 2.0f, Color.red);
         Debug.DrawRay(transform.position, Vector2.Perpendicular(lastNormal) * 2.0f * -xInput, Color.green);
     }
-    /// <summary>
-    /// Takes a Vertical movement from the player and applies force when the dash key and movement key are pressed
-    /// </summary>
-    /// <param name="direction"></param>
-    void Dash(Vector2 direction)
+
+    // Unground the player
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        //Debug ray for seeing dash direction
-        Debug.DrawRay(transform.position, direction * 2, Color.blue);
-
-        isDashing = true;
-
-        //Add Forces to dash
-        rb.AddForce(direction * dashForce, ForceMode2D.Impulse);
-
-        //Calls Reset dash function after a certain time had passed. In this case it is dashCooldown which is 1 second
-        Invoke(nameof(ResetDash), dashCooldown);
+        isGrounded = false;
     }
-    /// <summary>
-    /// Resets Dash by changing bool to false
-    /// </summary>
-    void ResetDash() => isDashing = false;
 }

@@ -48,31 +48,37 @@ public class UpdatedPlayerMovement : MonoBehaviour
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
 
+        // Set the direction enum (this can be used in calculations, since left is -1 and right is +1)
         if (xInput > 0) direction = Direction.Right;
         else if (xInput < 0) direction = Direction.Left;
 
         // Get the vector perpendicular to the last normal vector and multiply it by the players input and the base speed
         Vector2 up = lastNormal;
-        Vector2 forward = Vector2.Perpendicular(lastNormal);
+        Vector2 forward = -Vector2.Perpendicular(lastNormal) * (int)direction;
 
         Vector2 playerPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 dir = -up * 0.6f;
 
+        // This raycast essentially checks both edges of the player's bottom face (respective to the normal of the last touched surface)
         if (!Physics2D.Raycast(playerPos + (-up * 0.5f + forward * 0.5f), dir, 0.55f, surfaceLayer) && !Physics2D.Raycast(playerPos + (-up * 0.5f + forward * -0.5f), dir, 0.55f, surfaceLayer) && !leaveGroundFlag)
         {
+            // This could be whats causing the problem. This line is attempting to "wrap" the normal to match the next expected surface. This wouldn't work on weird angles, so be careful with level design
             lastNormal = new Vector2(Vector2.Perpendicular(-lastNormal).x * (int)direction, Vector2.Perpendicular(-lastNormal).y * (int)direction);
-            //lastNormal = 
             Debug.DrawRay(transform.position, lastNormal, Color.yellow, 2.0f);
 
+            // set a flag so the normal doesn't get over
             leaveGroundFlag = true;
             Invoke(nameof(ResetGroundFlag), 0.1f);
         }
+
+        // Set the velocity variable
+        vel = new(Vector2.Perpendicular(lastNormal).x * -xInput * baseSpeed, Vector2.Perpendicular(lastNormal).y * -xInput * baseSpeed);
     }
 
     // Physics forces and velocity changes should take place in the FixedUpdate() loop
     private void FixedUpdate()
     {
-        vel = new(Vector2.Perpendicular(lastNormal).x * -xInput * baseSpeed, Vector2.Perpendicular(lastNormal).y * -xInput * baseSpeed);
+        // set the rigidbody velocity   
         rb.velocity = vel;
     }
 

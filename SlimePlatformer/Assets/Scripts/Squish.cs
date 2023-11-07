@@ -6,26 +6,15 @@ public class Squish : MonoBehaviour
 {
     public GameObject player;
     
-   /* void Update()
+    void OnCollisionEnter(Collision collision)
     {
-        if (Input.GetKey("s"))
-		{
-			Shrink();
-		}
-        if (Input.GetKeyUp("s"))
+        // To be implemented
+        /*
+        if (collision.player.layer == 8)
         {
-            Unshrink();
+            player.transform.position = Vector3.Lerp (oldPos, oldPos + 5, Time.deltaTime * 2.0f);
+            player.transform.position = newPos;
         }
+        */
     }
-
-    void Shrink()
-    {
-        transform.localScale = new Vector3(1, 0.5f, 1);
-    }
-
-    void Unshrink()
-    {
-        transform.localScale = new Vector3(1, 1, 1);
-    }
-    */
 }

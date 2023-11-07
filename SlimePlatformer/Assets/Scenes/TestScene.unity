@@ -702,7 +702,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gravityTimeMultiplier: 2
+  gravityTimeMultiplier: -2
   surfaceCheckOffset: 0.5
   surfaceCheckRayLength: 0.3
   surfaceLayer:

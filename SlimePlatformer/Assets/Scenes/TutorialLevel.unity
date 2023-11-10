@@ -1547,7 +1547,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1973,8 +1973,9 @@ GameObject:
   - component: {fileID: 977890503}
   - component: {fileID: 977890504}
   - component: {fileID: 977890505}
+  - component: {fileID: 977890506}
   m_Layer: 8
-  m_Name: Square (92)
+  m_Name: Tunnel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2076,10 +2077,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.016434133, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2090,8 +2091,21 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.0328683, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &977890506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977890502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef62edb001111842b5027e45ff794a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1121017707}
 --- !u!1 &1004449167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2489,6 +2503,11 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!1 &1121017707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5429518537083262520, guid: e298e0887b4c86f42b38b5612b9421b4, type: 3}
+  m_PrefabInstance: {fileID: 339561395}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1248043938
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,6 +3475,7 @@ GameObject:
   - component: {fileID: 1538951560}
   - component: {fileID: 1538951559}
   - component: {fileID: 1538951561}
+  - component: {fileID: 1538951562}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3503,6 +3523,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: 0
+--- !u!114 &1538951562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538951558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef62edb001111842b5027e45ff794a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 977890502}
 --- !u!1 &1540636542
 GameObject:
   m_ObjectHideFlags: 0

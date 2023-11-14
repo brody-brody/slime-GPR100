@@ -62,6 +62,22 @@ public class UpdatedPlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void OnDisable()
+    {
+        Debug.Log("VELOCITY ON DISALBE :" + rb.velocity);
+        xInput = 0;
+        rb.velocity = Vector2.zero;
+        vel = Vector2.zero;
+    }
+    private void OnEnable()
+    {
+        Debug.Log("PRE SET: " + rb.velocity);
+        xInput = 0;
+        rb.velocity = Vector2.zero;
+        vel = Vector2.zero;
+        Debug.Log("AFTER:" + rb.velocity);
+    }
+
     private void Update()
     {
         // store horizontal input into the xInput variable

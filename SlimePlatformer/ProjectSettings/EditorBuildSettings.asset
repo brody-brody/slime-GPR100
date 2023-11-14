@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/tutorialLevelSmile.unity
     guid: 9218ec9cc3a1b4bf8a61e7b6368d1884
+  - enabled: 1
+    path: Assets/Scenes/TutorialLevel.unity
+    guid: 3c09c68f91b1be84697986a10dc63b1e
   m_configObjects: {}

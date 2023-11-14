@@ -56,7 +56,6 @@ public class UpdatedPlayerMovement : MonoBehaviour
 
     private bool canQueueJump;
 
-
     private void Awake()
     {
         // Store the reference to the players Rigidbody2D inside the rb variable. Assume this script is attached to the player's GameObject which holds the Rigidbody2D component
@@ -65,14 +64,12 @@ public class UpdatedPlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        bool accelerating = true;
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
 
         // Set the direction enum (this can be used in calculations, since left is -1 and right is +1)
         if (xInput > 0) direction = Direction.Right;
         else if (xInput < 0) direction = Direction.Left;
-        else accelerating = false;
 
 
         // This bool checks to see if the player is touching something
@@ -91,16 +88,23 @@ public class UpdatedPlayerMovement : MonoBehaviour
             canResetJumpFlag = false;
         }
 
+        // Enable gravity if the jump flag is on. Otherwise, all gravity should be off.
+        if (jumpFlag)
+        {
+            airTime += Time.deltaTime;
+
+            float gravityMultiplier = gravityOverTime.Evaluate(airTime);
+            rb.gravityScale = 3 + (3 * gravityMultiplier * gravityTimeMultiplier);
+        }
+        else
+        {
+            rb.gravityScale = 0;
+            airTime = 0.0f;
+        }
+
         CheckForNewSurface();
         TryQueueJump();
-
-        // Smooth the speed to the target speed
-        if (accelerating) currentSpeed = Mathf.SmoothDamp(currentSpeed, baseSpeed, ref currentVel, accelerationDamping / 10);
-        // Decelerate to 0
-        else currentSpeed = Mathf.SmoothDamp(currentSpeed, 0, ref currentVel, decelerationDamping / 10);
-
-        // Set the velocity variable
-        vel = new(Vector2.Perpendicular(lastNormal).x * -(int)direction * currentSpeed, Vector2.Perpendicular(lastNormal).y * -(int)direction * currentSpeed);
+        UpdateVelocity();
     }
 
     private void TryQueueJump()
@@ -122,6 +126,7 @@ public class UpdatedPlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        // stop gravity
         rb.gravityScale = 0;
         airTime = 0.0f;
 
@@ -130,16 +135,33 @@ public class UpdatedPlayerMovement : MonoBehaviour
 
         // on wall?
         float upForce = jumpUpForce;
-        if ((lastNormal.x == 1 || lastNormal.x == -1) && rb.velocity.y < -baseSpeed + 0.1f)
+
+        // this is the code for jumping down. I kinda don't like it - Seth
+        /*if ((lastNormal.x == 1 || lastNormal.x == -1) && rb.velocity.y < -baseSpeed + 0.1f)
         {
             upForce = 0;
-        }
+        }*/
 
+        // If on the ceiling, don't add force.
         if (lastNormal != Vector2.down)
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(new Vector2(lastNormal.x * jumpSideForce, upForce), ForceMode2D.Impulse);
         }
+    }
+
+    private void UpdateVelocity()
+    {
+        bool accelerating = true;
+        if (xInput == 0) accelerating = false;
+
+        // Smooth the speed to the target speed
+        if (accelerating) currentSpeed = Mathf.SmoothDamp(currentSpeed, baseSpeed, ref currentVel, accelerationDamping / 10);
+        // Decelerate to 0
+        else currentSpeed = Mathf.SmoothDamp(currentSpeed, 0, ref currentVel, decelerationDamping / 10);
+
+        // Set the velocity variable
+        vel = new(Vector2.Perpendicular(lastNormal).x * -(int)direction * currentSpeed, Vector2.Perpendicular(lastNormal).y * -(int)direction * currentSpeed);
     }
 
     /// <summary>
@@ -176,25 +198,18 @@ public class UpdatedPlayerMovement : MonoBehaviour
     // Physics forces and velocity changes should take place in the FixedUpdate() loop
     private void FixedUpdate()
     {
-        // Enable gravity if the jump flag is on. Otherwise, all gravity should be off.
-        if (jumpFlag)
-        {
-            airTime += Time.deltaTime;
-
-            float gravityMultiplier = gravityOverTime.Evaluate(airTime);
-            rb.gravityScale = 3 + (3 * gravityMultiplier * gravityTimeMultiplier);
-            return;
-        }
-        else {
-            rb.gravityScale = 0;
-            airTime = 0.0f;
-        }
+        if (jumpFlag) return;
 
         // set the rigidbody velocity   
         rb.velocity = vel;
     }
 
     private void ResetJumpFlag() => canResetJumpFlag = true;
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        jumpFlag = false;
+    }
 
     private void OnCollisionStay2D(Collision2D collision)
     {

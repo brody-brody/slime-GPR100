@@ -9,7 +9,7 @@ public class ResetLevel : MonoBehaviour
     // constantly testing if the player hits the r key, and runs Restart() if they do
     void Update()
     {
-        if (Input.GetKey("r")) {
+        if (Input.GetKey(KeyCode.R)) {
             Restart();
         }
     }

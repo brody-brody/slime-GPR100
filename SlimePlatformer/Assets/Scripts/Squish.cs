@@ -9,43 +9,39 @@ public class Squish : MonoBehaviour
 
     private UpdatedPlayerMovement playerMovement;
 
+    private void Start() {
+        playerMovement = player.GetComponent<UpdatedPlayerMovement>();
+    }
+
     private void OnTriggerEnter2D(Collider2D other) 
 	{
-        if (player.transform.position.y > 9.6)
-        {}
-        else
+
+        isLeft = (player.transform.position.x < transform.position.x);
+
+        if (other.transform != player.transform) 
+            return;
+
+        playerMovement.enabled = false;
+        player.transform.localScale = new Vector3(1, 0.5f, 1);
+
+        if (isLeft)
         {
-            if (player.transform.position.x < transform.position.x)
+            if (player.transform.position.y > 9.25)
             {
-                isLeft = true;
-            }
-            else
-            {
-                isLeft = false;
-            }
-            playerMovement = player.GetComponent<UpdatedPlayerMovement>();
-            if (other.transform != player.transform) 
-                return;
-            playerMovement.enabled = false;
-            player.transform.localScale = new Vector3(1, 0.5f, 1);
-            if (isLeft)
-            {
-                if (player.transform.position.y > 9.25)
-                {
-                    player.transform.position += new Vector3(0, -0.2515f, 0);
-                }
-                else
-                {
-                    player.transform.position += new Vector3(0, 0.2515f, 0);
-                }
+                player.transform.position += new Vector3(0, -0.2515f, 0);
             }
             else
             {
                 player.transform.position += new Vector3(0, 0.2515f, 0);
             }
-            StartCoroutine(moveThru());
-            Invoke(nameof(ResetPM), 1.1f);
         }
+        else
+        {
+            player.transform.position += new Vector3(0, 0.2515f, 0);
+        }
+
+        StartCoroutine(moveThru());
+        Invoke(nameof(ResetPM), 1.1f);
     }
 
     IEnumerator moveThru()
@@ -54,6 +50,7 @@ public class Squish : MonoBehaviour
         float waitTime = 1f;
         Vector3 targetPos = player.transform.position;
         Vector3 startPos = player.transform.position;
+
         if (isLeft)
         {
             targetPos = player.transform.position + new Vector3(6f, 0, 0);
@@ -73,5 +70,6 @@ public class Squish : MonoBehaviour
         player.transform.localScale = new Vector3(1, 1, 1);
         yield return null;
     }
+    
     void ResetPM() => playerMovement.enabled = true;
 }

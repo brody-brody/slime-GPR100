@@ -64,18 +64,18 @@ public class UpdatedPlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("VELOCITY ON DISALBE :" + rb.velocity);
+        // Debug.Log("VELOCITY ON DISALBE :" + rb.velocity);
         xInput = 0;
         rb.velocity = Vector2.zero;
         vel = Vector2.zero;
     }
     private void OnEnable()
     {
-        Debug.Log("PRE SET: " + rb.velocity);
+        // Debug.Log("PRE SET: " + rb.velocity);
         xInput = 0;
         rb.velocity = Vector2.zero;
         vel = Vector2.zero;
-        Debug.Log("AFTER:" + rb.velocity);
+        //  Debug.Log("AFTER:" + rb.velocity);
     }
 
     private void Update()

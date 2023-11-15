@@ -26,7 +26,7 @@ public class Squish : MonoBehaviour
 
         if (isLeft)
         {
-            if (player.transform.position.y > 9.25)
+            if (player.transform.position.y < transform.position.y)
             {
                 player.transform.position += new Vector3(0, -0.2515f, 0);
             }
@@ -37,7 +37,7 @@ public class Squish : MonoBehaviour
         }
         else
         {
-            player.transform.position += new Vector3(0, 0.2515f, 0);
+            player.transform.position += new Vector3(0, -0.2515f, 0);
         }
 
         StartCoroutine(moveThru());

@@ -7,7 +7,7 @@ public class CollectibleTrigger : MonoBehaviour
 {
 	// initializing # of coins and images of coins present on canvas
 	public GameManager gameManager;
-	public Image coin1, coin2, coin3;
+
 
 	private void Start()
 	{
@@ -22,17 +22,14 @@ public class CollectibleTrigger : MonoBehaviour
 		if (gameManager.coins == 0)
 		{
 			gameManager.coins++;
-			coin1.color = new Color32(255,255,0,100);
 		}
 		else if (gameManager.coins == 1)
 		{
 			gameManager.coins++;
-			coin2.color = new Color32(255,255,0,100);
 		}
 		else if (gameManager.coins == 2)
 		{
 			gameManager.coins++;
-			coin3.color = new Color32(255,255,0,100);
 		}
 		Destroy(gameObject);
 	}

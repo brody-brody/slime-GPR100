@@ -7,12 +7,19 @@ public class SethPlayerTest : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float gravityMultiplier = 9.81f;
+    [SerializeField] private float stickToNormalForce = 15.0f;
+    [SerializeField] private float jumpForce = 5.0f;
 
     private Vector2 currentNormal = Vector2.up;
     private Rigidbody2D rb;
 
     private float xInput;
     private Vector2 vel;
+
+    private Vector2 currentGravity;
+    private bool wantsToLeaveGround = false;
+    private bool jumpFlag = false;
 
     private void Awake()
     {
@@ -24,29 +31,46 @@ public class SethPlayerTest : MonoBehaviour
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
 
-        Ray ray = new Ray(transform.position, -currentNormal);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction.normalized, 1, groundLayer);
-
-        Debug.DrawRay(ray.origin, ray.direction.normalized * 1, Color.red);
-
-        if (hit) {
-            Debug.Log("HELP!");
-            Ray r2 = new Ray(hit.point, currentNormal);
-            //transform.position = new Vector2(hit.point.x + r2.GetPoint(0.5f).x, hit.point.y + r2.GetPoint(0.5f).y);
-            
-            //Debug.DrawRay(r2.origin, currentNormal, Color.cyan);
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            wantsToLeaveGround = true;
         }
 
-        //Debug.DrawRay(ray.origin, ray.direction * 0.5f, Color.blue);
-        //Debug.DrawRay(ray.origin, currentNormal * 2.0f, Color.yellow);
+        Ray ray = new Ray(transform.position, -currentNormal);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction.normalized, 0.25f, groundLayer);
 
-        vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
+        Debug.DrawRay(ray.origin, ray.direction.normalized * 0.25f, Color.red);
+
+        // set current gravity based on whether or the not the player wants to leave the ground
+
+        if(wantsToLeaveGround || jumpFlag) {
+            currentGravity = new Vector2(0.0f, -gravityMultiplier);
+        }
+        else {
+            currentGravity = -currentNormal * stickToNormalForce;
+        }
+        
+
+        // set the velocity
+        vel = new(Vector2.Perpendicular(currentNormal.normalized).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal.normalized).y * -xInput * moveSpeed);
     }
 
     private void FixedUpdate()
     {
+        vel += currentGravity;
+
+        if (wantsToLeaveGround) {
+            wantsToLeaveGround = false;
+
+            jumpFlag = true;
+            Invoke(nameof(ResetJumpFlag), 0.15f);
+
+            rb.velocity = new Vector2(currentNormal.x * jumpForce, currentNormal.y * jumpForce);
+        }
+
         rb.velocity = vel;
     }
+
+    private void ResetJumpFlag() => jumpFlag = false;
 
     private void OnCollisionStay2D(Collision2D collision)
     {

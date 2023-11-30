@@ -21,6 +21,8 @@ public class SethPlayerTest : MonoBehaviour
     private Rigidbody2D rb;
 
     private float xInput;
+    private float yInput;
+
     private Vector2 vel;
 
     private Vector2 currentGravity;
@@ -28,6 +30,11 @@ public class SethPlayerTest : MonoBehaviour
     private bool wantsToLeaveGround = false;
     private bool jumpAttempted = false;
     private bool jumpFlag = false;
+
+    public bool IsMoving { get { return rb.velocity.magnitude > 0.1f && xInput > 0 && !isGrounded; } }
+    public bool IsGrounded { get { return isGrounded; } }
+    public bool PlayerJumpFlag { get { return jumpFlag; } }
+    public Vector2 CurrentNormal { get { return currentNormal; } }
 
     private float jumpBufferTimer;
 
@@ -40,8 +47,10 @@ public class SethPlayerTest : MonoBehaviour
     {
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Vertical");
 
         TryQueueJump();
+
 
         //Ray ray = new Ray(transform.position, -currentNormal);
         //Debug.DrawRay(ray.origin, ray.direction * 3f, Color.cyan);
@@ -61,7 +70,9 @@ public class SethPlayerTest : MonoBehaviour
         
 
         // set the velocity
-        vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
+      
+       // else if(Mathf.Abs(currentNormal.x) > 0.01f)
+         //   vel = new(Vector2.Perpendicular(currentNormal).x * yInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * yInput * moveSpeed);
     }
 
     private void TryQueueJump()
@@ -118,10 +129,35 @@ public class SethPlayerTest : MonoBehaviour
         currentNormal = collision.contacts[0].normal;
 
         // change the normal to the other contact
-        if(collision.contactCount > 1)
-        {
+        if(collision.contactCount > 1) {
             currentNormal = collision.contacts[1].normal;
         }
+
+        /*
+        if (currentNormal.y > 0.01f)
+        {
+            Debug.Log("On up!");
+            vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
+        }
+        else if (Mathf.Abs(currentNormal.y) < 0.01f && currentNormal.x < 0)
+        { // sides
+            Debug.Log("On right side!");
+            vel = new(Vector2.Perpendicular(currentNormal).x * -yInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -yInput * moveSpeed);
+        }
+        else if (Mathf.Abs(currentNormal.y) < 0.01f && currentNormal.x > 0)
+        {
+            Debug.Log("On left side!");
+            vel = new(Vector2.Perpendicular(currentNormal).x * yInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * yInput * moveSpeed);
+        }
+        else if (currentNormal.y < 0)
+        {
+            vel = new(Vector2.Perpendicular(currentNormal).x * xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * xInput * moveSpeed);
+            Debug.Log("On down!");
+        }*/
+
+        vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
+
+        Debug.DrawRay(transform.position, currentNormal.normalized, Color.cyan);
     }
 
     private void OnCollisionExit2D(Collision2D collision)

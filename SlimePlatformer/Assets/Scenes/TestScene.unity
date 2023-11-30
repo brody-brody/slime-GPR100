@@ -1962,6 +1962,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1996001661 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2456155779087304674, guid: e298e0887b4c86f42b38b5612b9421b4, type: 3}
+  m_PrefabInstance: {fileID: 1201289556}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2110547527
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1974,6 +1979,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sentry
       objectReference: {fileID: 0}
+    - target: {fileID: 5034097835969786759, guid: e1467531852f6e44ca745985c58be8ad, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1996001661}
     - target: {fileID: 6833018175386468014, guid: e1467531852f6e44ca745985c58be8ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.8666692
@@ -2014,7 +2023,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -666982666805859746, guid: e1467531852f6e44ca745985c58be8ad, type: 3}
+    - {fileID: 2673838966120538772, guid: e1467531852f6e44ca745985c58be8ad, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

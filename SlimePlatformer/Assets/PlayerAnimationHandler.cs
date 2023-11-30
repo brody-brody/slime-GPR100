@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerAnimationHandler : MonoBehaviour
@@ -65,13 +66,13 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateRotation()
     {
-        if(movement.IsGrounded)
-        {
-            renderer.transform.up = Vector3.Lerp(renderer.transform.up, movement.CurrentNormal, Time.deltaTime * upSmoothingOnGround);
-        }
-        else {
-            renderer.transform.up = Vector3.Lerp(renderer.transform.up, Vector3.up, Time.deltaTime * upSmoothingInAir);
-        }
+        float angle = Vector3.Angle(transform.up, movement.CurrentNormal);
+        if (movement.CurrentNormal.x > 0) angle = -angle;
 
+        Quaternion fromQuat = renderer.transform.localRotation;
+        Quaternion toQuat = movement.IsGrounded ? Quaternion.AngleAxis(angle, Vector3.forward) : Quaternion.Euler(0,0,0);
+        float smoothingFactor = movement.IsGrounded ? upSmoothingOnGround : upSmoothingInAir;
+
+        renderer.transform.localRotation = Quaternion.Lerp(fromQuat, toQuat, Time.deltaTime * smoothingFactor);
     }
 }

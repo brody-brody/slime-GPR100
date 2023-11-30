@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelFinish : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class LevelFinish : MonoBehaviour
                 return;
         Debug.Log("finish");
         playerMovement.enabled = false;
+        SceneManager.LoadScene("MenuScene");
     }
 
 }

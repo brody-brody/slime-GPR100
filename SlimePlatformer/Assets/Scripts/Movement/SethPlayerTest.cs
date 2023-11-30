@@ -124,6 +124,13 @@ public class SethPlayerTest : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
+        // ensure the player hit the ground mask
+        if(((1 << collision.gameObject.layer) & groundLayer) == 0) {
+            isGrounded = false;
+
+            return;
+        }
+
         isGrounded = true;
 
         currentNormal = collision.contacts[0].normal;

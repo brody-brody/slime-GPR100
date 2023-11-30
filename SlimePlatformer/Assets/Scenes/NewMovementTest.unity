@@ -299,8 +299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c09fbd947eb443e891fcb884064ce88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 162399238}
   smoothTime: {x: 0.25, y: 0.1}
+--- !u!4 &162399238 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+  m_PrefabInstance: {fileID: 994805017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &178869779
 GameObject:
   m_ObjectHideFlags: 0

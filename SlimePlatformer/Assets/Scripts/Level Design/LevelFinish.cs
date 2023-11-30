@@ -5,10 +5,10 @@ using UnityEngine;
 public class LevelFinish : MonoBehaviour
 {
     public GameObject player;
-    private UpdatedPlayerMovement playerMovement;
+    private SethPlayerTest playerMovement;
 
     private void Start() {
-        playerMovement = player.GetComponent<UpdatedPlayerMovement>();
+        playerMovement = player.GetComponent<SethPlayerTest>();
     }
 
     private void OnTriggerEnter2D(Collider2D other) 

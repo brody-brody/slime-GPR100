@@ -65,12 +65,13 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateRotation()
     {
-        if (!movement.IsGrounded) {
-            renderer.transform.up = Vector3.Lerp(renderer.transform.up, Vector3.up, Time.deltaTime * upSmoothingInAir);
-        }
-        else {
+        if(movement.IsGrounded)
+        {
             renderer.transform.up = Vector3.Lerp(renderer.transform.up, movement.CurrentNormal, Time.deltaTime * upSmoothingOnGround);
         }
-        
+        else {
+            renderer.transform.up = Vector3.Lerp(renderer.transform.up, Vector3.up, Time.deltaTime * upSmoothingInAir);
+        }
+
     }
 }

@@ -1828,7 +1828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &439300460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,15 +1841,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c57cdb71d5494126a9154768d647459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  eyeLeft: {fileID: 0}
-  eyeRight: {fileID: 0}
+  sprite: {fileID: 680144472}
+  eyeLeft: {fileID: 1135411878}
+  eyeRight: {fileID: 543869869}
   shellDamageSprites: []
   eyeballNormal: {fileID: 0}
   eyeballLeftHurt: {fileID: 0}
   eyeballRightHurt: {fileID: 0}
-  eyePositionLeft: {fileID: 0}
-  eyePositionRight: {fileID: 0}
+  eyePositionLeft: {fileID: 957846120}
+  eyePositionRight: {fileID: 391090288}
   eyePositionSmoothing: 0
   randomEyeSpeed: {x: 0, y: 0}
 --- !u!4 &439300461
@@ -12793,6 +12793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15d75fca8624a5692ce7d7499aeb90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRotation: {fileID: 3242995357752853931}
   myAnimator: {fileID: 7548742665010646300}
   renderer: {fileID: 1930386402}
   upSmoothingInAir: 5

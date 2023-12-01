@@ -7,7 +7,10 @@ public class SethPlayerTest : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5.0f;
+
+    [SerializeField] private Vector2 magmaBoostForce = new Vector2(4.0f, 6.0f);
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask nonstickLayer;
 
     [Header("Gravity Forces")]
     [SerializeField] private float gravityMultiplier = 9.806f;
@@ -18,9 +21,13 @@ public class SethPlayerTest : MonoBehaviour
     [SerializeField] private float jumpUpForce = 5.0f;
     [SerializeField] private float jumpBufferTime = 0.2f;
 
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem magmaParticles;
+
     [SerializeField] private Collider2D collider;
 
     private Vector2 currentNormal = Vector2.up;
+    private Vector2 lastVelocityBeforeCollision;
     private Rigidbody2D rb;
 
     private float xInput;
@@ -40,6 +47,7 @@ public class SethPlayerTest : MonoBehaviour
     public bool IsGrounded { get { return isGrounded; } }
     public bool PlayerJumpFlag { get { return jumpFlag; } }
     public Vector2 CurrentNormal { get { return currentNormal; } }
+    public Vector2 LastVelocityBeforeCollision { get { return lastVelocityBeforeCollision; } }
 
     private float jumpBufferTimer;
 
@@ -80,7 +88,7 @@ public class SethPlayerTest : MonoBehaviour
 
         // set current gravity based on whether or the not the player wants to leave the ground
 
-        if(!isGrounded || jumpFlag) {
+        if (!isGrounded || jumpFlag) {
             currentGravity = new Vector2(0.0f, 0.0f);
             rb.gravityScale = gravityMultiplier;
         }
@@ -122,6 +130,8 @@ public class SethPlayerTest : MonoBehaviour
     {
         if (!canMove) return;
 
+        lastVelocityBeforeCollision = rb.velocity;
+
         vel += currentGravity;
 
         if (wantsToLeaveGround) {
@@ -151,9 +161,30 @@ public class SethPlayerTest : MonoBehaviour
     {
         // ensure the player hit the ground mask
         if (((1 << collision.gameObject.layer) & groundLayer) == 0) {
+            if(((1 << collision.gameObject.layer) & nonstickLayer) != 0)
+            {
+                magmaParticles.Play();
+                jumpFlag = true;
+                Invoke(nameof(ResetJumpFlag), 0.06f);
+
+                Debug.Log("Hit non stick!");
+
+                rb.velocity = Vector2.zero;
+
+                //if (currentNormal.y < 0.9f)
+                   // rb.AddForce(Vector2.up * magmaBoostForce.y, ForceMode2D.Impulse);
+
+                rb.AddForce(collision.contacts[0].normal * magmaBoostForce, ForceMode2D.Impulse);
+            }
+
             isGrounded = false;
 
             return;
+        }
+
+        if(!jumpFlag && isGrounded)
+        {
+            magmaParticles.Stop();
         }
 
         isGrounded = true;

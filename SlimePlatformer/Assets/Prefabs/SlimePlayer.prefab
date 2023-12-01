@@ -59,6 +59,7 @@ MonoBehaviour:
   sideJumpForce: 9
   jumpUpForce: 19
   jumpBufferTime: 0.1
+  collider: {fileID: 5975716507104178449}
 --- !u!50 &6601881138965580331
 Rigidbody2D:
   serializedVersion: 4

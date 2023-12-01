@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SethPlayerTest : MonoBehaviour
@@ -17,6 +18,8 @@ public class SethPlayerTest : MonoBehaviour
     [SerializeField] private float jumpUpForce = 5.0f;
     [SerializeField] private float jumpBufferTime = 0.2f;
 
+    [SerializeField] private Collider2D collider;
+
     private Vector2 currentNormal = Vector2.up;
     private Rigidbody2D rb;
 
@@ -24,6 +27,8 @@ public class SethPlayerTest : MonoBehaviour
     private float yInput;
 
     private Vector2 vel;
+
+    private bool canMove = true;
 
     private Vector2 currentGravity;
     private bool isGrounded = false;
@@ -43,8 +48,26 @@ public class SethPlayerTest : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    public void SuspendAll()
+    {
+        canMove = false;
+        rb.isKinematic = true;
+        collider.enabled = false;
+        rb.velocity = Vector2.zero;
+    }
+
+    public void UnsuspendAll()
+    {
+        canMove = true;
+        rb.isKinematic = false;
+        collider.enabled = true;
+        rb.velocity = Vector2.zero;
+    }
+
     void Update()
     {
+        if (!canMove) return;
+
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
@@ -97,6 +120,8 @@ public class SethPlayerTest : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canMove) return;
+
         vel += currentGravity;
 
         if (wantsToLeaveGround) {
@@ -125,7 +150,7 @@ public class SethPlayerTest : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         // ensure the player hit the ground mask
-        if(((1 << collision.gameObject.layer) & groundLayer) == 0) {
+        if (((1 << collision.gameObject.layer) & groundLayer) == 0) {
             isGrounded = false;
 
             return;

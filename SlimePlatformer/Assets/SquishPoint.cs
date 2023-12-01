@@ -65,8 +65,8 @@ public class SquishPoint : MonoBehaviour
 
         if (!enteredOnSelf && readyToMove && (enterenceType == EnterenceType.IsBoth || enterenceType == EnterenceType.IsExitOnly) && !exiting && isPlayerEntered)
         {
-            StartCoroutine(Exit());
             exiting = true;
+            StartCoroutine(Exit());
         }
     }
 
@@ -75,6 +75,7 @@ public class SquishPoint : MonoBehaviour
         // If not an enterence, can't enter
         if (enterenceType != EnterenceType.IsBoth && enterenceType != EnterenceType.IsEnterenceOnly) return;
         if (isPlayerEntered) return;
+        if (exiting) return;
 
 
         if (Vector2.Distance(player.transform.position, transform.position) < 0.1f) { }
@@ -104,8 +105,10 @@ public class SquishPoint : MonoBehaviour
 
     private void MakeMove()
     {
-        if (!readyToMove) return;
-        if (moving) return;
+        if (!readyToMove || moving || exiting) return;
+
+        // invalid if distance is too far. assume its a bug :D
+        if (Vector2.Distance(player.transform.position, transform.position) > 0.3f) return;
 
         // get input
         Direction attemptedDir = GetInputDirection();
@@ -140,6 +143,7 @@ public class SquishPoint : MonoBehaviour
 
     private IEnumerator Exit()
     {
+        readyToMove = false;
         Vector3 moveOffset = Vector3.zero;
         switch (exitDirection)
         {
@@ -194,7 +198,7 @@ public class SquishPoint : MonoBehaviour
         float duration = distance / moveSpeed;
 
         yield return LerpToPosition(player.transform.position, data.point.transform.position, duration);
-        CameraShake.instance.Shake(0.34f, 0.35f);
+        CameraShake.instance.Shake(0.34f, 0.2f);
 
         yield return new WaitForSeconds(0.1f);
 

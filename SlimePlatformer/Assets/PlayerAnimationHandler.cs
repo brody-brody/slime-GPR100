@@ -9,6 +9,10 @@ public class PlayerAnimationHandler : MonoBehaviour
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private float upSmoothingInAir = 2.2f;
     [SerializeField] private float upSmoothingOnGround = 0.25f;
+
+    [SerializeField] private Sprite spriteLeft;
+    [SerializeField] private Sprite spriteRight;
+
     private SethPlayerTest movement;
 
     private bool jumping;
@@ -30,12 +34,15 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        if (movement.IsMoving)
-        {
+        if (movement.IsMoving)  {
             myAnimator.SetBool("Walking", true);
+            if(movement.HorizontalInput > 0) {
+                renderer.sprite = spriteRight;
+            } else if(movement.HorizontalInput < 0) {
+                renderer.sprite = spriteLeft;
+            }
         }
-        else
-        {
+        else {
             myAnimator.SetBool("Walking", false);
         }
 

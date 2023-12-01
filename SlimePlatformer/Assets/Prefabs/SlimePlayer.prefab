@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  magmaBoostForce: {x: 4, y: 6}
+  magmaBoostForce: {x: 12, y: 30}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -210,6 +210,8 @@ MonoBehaviour:
   renderer: {fileID: 9173079206305316144}
   upSmoothingInAir: 5
   upSmoothingOnGround: 15
+  spriteLeft: {fileID: -1770135892, guid: 1f2cd443b3eaf43729c75005c7ace64d, type: 3}
+  spriteRight: {fileID: 1603866799, guid: 1f2cd443b3eaf43729c75005c7ace64d, type: 3}
 --- !u!1 &4253935141443273068
 GameObject:
   m_ObjectHideFlags: 0

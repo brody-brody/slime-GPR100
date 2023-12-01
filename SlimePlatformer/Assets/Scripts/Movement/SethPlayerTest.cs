@@ -43,11 +43,12 @@ public class SethPlayerTest : MonoBehaviour
     private bool jumpAttempted = false;
     private bool jumpFlag = false;
 
-    public bool IsMoving { get { return rb.velocity.magnitude > 0.1f && xInput > 0 && !isGrounded; } }
+    public bool IsMoving { get { return rb.velocity.magnitude > 0.1f && xInput != 0 && isGrounded; } }
     public bool IsGrounded { get { return isGrounded; } }
     public bool PlayerJumpFlag { get { return jumpFlag; } }
     public Vector2 CurrentNormal { get { return currentNormal; } }
     public Vector2 LastVelocityBeforeCollision { get { return lastVelocityBeforeCollision; } }
+    public float HorizontalInput { get { return xInput; } }
 
     private float jumpBufferTimer;
 

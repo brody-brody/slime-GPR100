@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8381765213952314548}
   - component: {fileID: 8551485217634863030}
   - component: {fileID: 9038121423378407052}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,4 +166,4 @@ MonoBehaviour:
     m_Bits: 64
   speed: 150
   lifetime: 4
-  player: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}

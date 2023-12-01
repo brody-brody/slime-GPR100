@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class SnailEnemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Renderer References")]
+    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private SpriteRenderer eyeLeft;
+    [SerializeField] private SpriteRenderer eyeRight;
 
-    // Update is called once per frame
-    void Update()
+    [Header("Sprite References")]
+    [SerializeField] private Sprite[] shellDamageSprites;
+    [SerializeField] private Sprite eyeballNormal;
+    [SerializeField] private Sprite eyeballLeftHurt;
+    [SerializeField] private Sprite eyeballRightHurt;
+
+    [Header("Eye Position")]
+    [SerializeField] private Transform eyePositionLeft;
+    [SerializeField] private Transform eyePositionRight;
+
+    [SerializeField] private float eyePositionSmoothing;
+    [SerializeField] private Vector2 randomEyeSpeed;
+
+    private void Update()
     {
-        
+       // eyeLeft.transform.localPosition = Vector3.Lerp()
     }
 }

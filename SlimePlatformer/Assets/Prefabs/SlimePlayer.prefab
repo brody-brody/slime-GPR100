@@ -58,11 +58,11 @@ MonoBehaviour:
     m_Bits: 64
   nonstickLayer:
     serializedVersion: 2
-    m_Bits: 0
-  gravityMultiplier: 9.81
+    m_Bits: 128
+  gravityMultiplier: 5.5
   stickToNormalForce: 15
-  sideJumpForce: 9
-  jumpUpForce: 19
+  sideJumpForce: 5
+  jumpUpForce: 15.5
   jumpBufferTime: 0.1
   magmaParticles: {fileID: 6465938786198259499}
   collider: {fileID: 5975716507104178449}

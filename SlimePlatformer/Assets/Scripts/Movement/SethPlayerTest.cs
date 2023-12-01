@@ -19,6 +19,8 @@ public class SethPlayerTest : MonoBehaviour
     [Header("Jump")]
     [SerializeField] private float sideJumpForce = 5.0f;
     [SerializeField] private float jumpUpForce = 5.0f;
+    [SerializeField] private float additionalJumpForce = 5.0f;
+    [SerializeField] private float jumpTime = 0.5f;
     [SerializeField] private float jumpBufferTime = 0.2f;
 
     [Header("VFX")]
@@ -27,28 +29,36 @@ public class SethPlayerTest : MonoBehaviour
     [SerializeField] private Collider2D collider;
 
     private Vector2 currentNormal = Vector2.up;
-    private Vector2 lastVelocityBeforeCollision;
     private Rigidbody2D rb;
 
+    // jump variables
+    private float jumpTimeStamp;
+
+    // input variables
     private float xInput;
     private float yInput;
 
+    // velocity variables
     private Vector2 vel;
-
-    private bool canMove = true;
-
     private Vector2 currentGravity;
+    private Vector2 lastVelocityBeforeCollision;
+
+    // bools
+    private bool holdingJumpKey = false;
+    private bool canMove = true;
     private bool isGrounded = false;
     private bool wantsToLeaveGround = false;
     private bool jumpAttempted = false;
     private bool jumpFlag = false;
 
+    #region Accessors
     public bool IsMoving { get { return rb.velocity.magnitude > 0.1f && xInput != 0 && isGrounded; } }
     public bool IsGrounded { get { return isGrounded; } }
     public bool PlayerJumpFlag { get { return jumpFlag; } }
     public Vector2 CurrentNormal { get { return currentNormal; } }
     public Vector2 LastVelocityBeforeCollision { get { return lastVelocityBeforeCollision; } }
     public float HorizontalInput { get { return xInput; } }
+    #endregion
 
     private float jumpBufferTimer;
 
@@ -81,11 +91,9 @@ public class SethPlayerTest : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 
+        holdingJumpKey = Input.GetKey(KeyCode.Space);
+
         TryQueueJump();
-
-
-        //Ray ray = new Ray(transform.position, -currentNormal);
-        //Debug.DrawRay(ray.origin, ray.direction * 3f, Color.cyan);
 
         // set current gravity based on whether or the not the player wants to leave the ground
 
@@ -139,6 +147,7 @@ public class SethPlayerTest : MonoBehaviour
             wantsToLeaveGround = false;
 
             jumpFlag = true;
+            jumpTimeStamp = Time.time;
             Invoke(nameof(ResetJumpFlag), 0.06f);
 
             rb.velocity = new Vector2(rb.velocity.x, 0.0f);
@@ -153,6 +162,16 @@ public class SethPlayerTest : MonoBehaviour
         else if(!jumpFlag && isGrounded)
         {
             rb.velocity = vel;
+        }
+
+        // allow key press
+        if(Time.time < jumpTimeStamp + jumpTime && holdingJumpKey && !isGrounded)
+        {
+            if(currentNormal.y > -0.5f) {
+                Debug.Log("Pussy! " + currentNormal.y);
+
+                rb.AddForce(Vector2.up * additionalJumpForce, ForceMode2D.Force);
+            }
         }
     }
 

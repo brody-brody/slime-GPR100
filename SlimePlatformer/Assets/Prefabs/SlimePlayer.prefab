@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f15d75fca8624a5692ce7d7499aeb90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetRotation: {fileID: 3242995358645747890}
   myAnimator: {fileID: 7548742664116504581}
   renderer: {fileID: 851340390113898137}
   upSmoothingInAir: 5
@@ -318,9 +319,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 923201e6ce19c4545a1f381b1448fe94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!1 &2535094863086022585
 GameObject:
   m_ObjectHideFlags: 0

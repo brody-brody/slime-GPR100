@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelFinish : MonoBehaviour
 {
     public GameObject player;
+    public GameObject finishMenu;
     private SethPlayerTest playerMovement;
 
     private void Start() {
@@ -18,7 +19,9 @@ public class LevelFinish : MonoBehaviour
                 return;
         Debug.Log("finish");
         playerMovement.enabled = false;
-        SceneManager.LoadScene("MenuScene");
+        finishMenu.SetActive(true);
+        playerMovement.GetComponent<SethPlayerTest>().SuspendAll();
+
     }
 
 }

@@ -13,18 +13,28 @@ public class SethPlayerTest : MonoBehaviour
     [SerializeField] private LayerMask nonstickLayer;
 
     [Header("Gravity Forces")]
-    [SerializeField] private float gravityMultiplier = 9.806f;
-    [SerializeField] private float stickToNormalForce = 15.0f;
+    [SerializeField]
+    private float gravityMultiplier = 9.806f;
+    [SerializeField]
+    private float stickToNormalForce = 15.0f;
+    [SerializeField]
+    private float airControl = 3.0f;
 
     [Header("Jump")]
-    [SerializeField] private float sideJumpForce = 5.0f;
-    [SerializeField] private float jumpUpForce = 5.0f;
-    [SerializeField] private float additionalJumpForce = 5.0f;
-    [SerializeField] private float jumpTime = 0.5f;
-    [SerializeField] private float jumpBufferTime = 0.2f;
+    [SerializeField]
+    private float sideJumpForce = 5.0f;
+    [SerializeField]
+    private float jumpUpForce = 5.0f;
+    [SerializeField]
+    private float additionalJumpForce = 5.0f;
+    [SerializeField]
+    private float jumpTime = 0.5f;
+    [SerializeField]
+    private float jumpBufferTime = 0.2f;
 
     [Header("VFX")]
     [SerializeField] private ParticleSystem magmaParticles;
+    [SerializeField] private TrailRenderer jumpTrail;
 
     [SerializeField] private Collider2D collider;
 
@@ -106,6 +116,7 @@ public class SethPlayerTest : MonoBehaviour
         {
             currentGravity = -currentNormal.normalized * stickToNormalForce;
             rb.gravityScale = 0.0f;
+            jumpTrail.emitting = false;
         }
         
 
@@ -150,6 +161,8 @@ public class SethPlayerTest : MonoBehaviour
             jumpTimeStamp = Time.time;
             Invoke(nameof(ResetJumpFlag), 0.06f);
 
+            jumpTrail.emitting = true;
+
             rb.velocity = new Vector2(rb.velocity.x, 0.0f);
 
             // as long as the player isnt on the ceiling
@@ -164,14 +177,17 @@ public class SethPlayerTest : MonoBehaviour
             rb.velocity = vel;
         }
 
-        // allow key press
-        if(Time.time < jumpTimeStamp + jumpTime && holdingJumpKey && !isGrounded)
-        {
+        // allow key press while jumping
+        if(Time.time < jumpTimeStamp + jumpTime && holdingJumpKey && !isGrounded) {
             if(currentNormal.y > -0.5f) {
-                Debug.Log("Pussy! " + currentNormal.y);
-
                 rb.AddForce(Vector2.up * additionalJumpForce, ForceMode2D.Force);
             }
+        }
+
+        // air control
+        if (!isGrounded)
+        {
+            rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
         }
     }
 

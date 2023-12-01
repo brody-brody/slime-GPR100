@@ -44,8 +44,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         }
 
         if (movement.IsMoving)  {
-            myAnimator.SetBool("Walking", true);
-            
+            myAnimator.SetBool("Walking", true);    
         }
         else {
             myAnimator.SetBool("Walking", false);
@@ -82,7 +81,7 @@ public class PlayerAnimationHandler : MonoBehaviour
         if (movement.CurrentNormal.x > 0) angle = -angle;
 
         Quaternion fromQuat = renderer.transform.localRotation;
-        Quaternion toQuat = movement.IsGrounded ? Quaternion.AngleAxis(angle, Vector3.forward) : Quaternion.Euler(0,0,0);
+        Quaternion toQuat = movement.IsGrounded ? Quaternion.AngleAxis(angle, Vector3.forward) : Quaternion.Euler(0, 0, 0);
         float smoothingFactor = movement.IsGrounded ? upSmoothingOnGround : upSmoothingInAir;
 
         renderer.transform.localRotation = Quaternion.Lerp(fromQuat, toQuat, Time.deltaTime * smoothingFactor);

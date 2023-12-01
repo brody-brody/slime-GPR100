@@ -11,7 +11,6 @@ public class DeathManager : MonoBehaviour
     private void EnableDeathScreen()
     {
         deathScreen.SetActive(true);
-
     }
 
     private void OnEnable()

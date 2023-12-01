@@ -7748,6 +7748,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1949648386507162782, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1418548612}
     - target: {fileID: 774606685574183679, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_Name
       value: SlimePlayer
@@ -7827,6 +7831,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3581414688125076976, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+      propertyPath: m_Radius
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3581414688125076976, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
@@ -7878,11 +7886,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7543678078913450609, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c69eec3c2b7ff614987d8e8089f2ed92, type: 3}
+    - target: {fileID: 7543678078913450609, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4378313004088892030, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 3389631497105926404, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 3544260005480860743, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 6964942082624053925, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 4651740489061904233, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 8562827011418595346, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 6692049841786958169, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 3674288880988389379, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 5969107515543444353, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+    - {fileID: 7582967597478242549, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9369657c3c723024390e2fd6a10453e3, type: 3}
+--- !u!1 &1418548612 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 774606685574183679, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+  m_PrefabInstance: {fileID: 994805017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1696965464
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,11 +8,10 @@ public class Sunflower : MonoBehaviour
     [SerializeField] private float gravityMultiplier = 9.806f;
     [SerializeField] private float stickToNormalForce = 15.0f;
 
-    private Vector2 
-        currentNormal = Vector2.up, 
+    private Vector2
+        currentNormal = Vector2.up,
         currentVelocity,
-        currentGravity,
-        direction;
+        currentGravity;
 
     private Rigidbody2D rb;
 
@@ -22,12 +21,13 @@ public class Sunflower : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        direction = new Vector2(0, 1);
     }
 
     // Update is called once per frame
     void Update()
     {
+        gameObject.transform.Rotate(0, 0, 10 / 10);
+
         currentGravity = -currentNormal.normalized * stickToNormalForce;
     }
     private void FixedUpdate()

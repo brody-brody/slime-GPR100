@@ -1,40 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SethPlayerTest : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5.0f;
+
+    [SerializeField] private Vector2 magmaBoostForce = new Vector2(4.0f, 6.0f);
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask nonstickLayer;
 
     [Header("Gravity Forces")]
-    [SerializeField] private float gravityMultiplier = 9.806f;
-    [SerializeField] private float stickToNormalForce = 15.0f;
+    [SerializeField]
+    private float gravityMultiplier = 9.806f;
+    [SerializeField]
+    private float stickToNormalForce = 15.0f;
+    [SerializeField]
+    private float airControl = 3.0f;
 
     [Header("Jump")]
-    [SerializeField] private float sideJumpForce = 5.0f;
-    [SerializeField] private float jumpUpForce = 5.0f;
-    [SerializeField] private float jumpBufferTime = 0.2f;
+    [SerializeField]
+    private float sideJumpForce = 5.0f;
+    [SerializeField]
+    private float jumpUpForce = 5.0f;
+    [SerializeField]
+    private float additionalJumpForce = 5.0f;
+    [SerializeField]
+    private float jumpTime = 0.5f;
+    [SerializeField]
+    private float jumpBufferTime = 0.2f;
+
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem magmaParticles;
+    [SerializeField] private TrailRenderer jumpTrail;
+
+    [Header("SFX")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip landClip;
+    [SerializeField] private AudioClip hitMagmaClip;
+    [SerializeField] private AudioClip soarMagmaClip;
+
+    [SerializeField] private Collider2D collider;
 
     private Vector2 currentNormal = Vector2.up;
     private Rigidbody2D rb;
 
+    // jump variables
+    private float jumpTimeStamp;
+
+    // input variables
     private float xInput;
     private float yInput;
 
+    // velocity variables
     private Vector2 vel;
-
     private Vector2 currentGravity;
+    private Vector2 lastVelocityBeforeCollision;
+
+    // bools
+    private bool holdingJumpKey = false;
+    private bool canMove = true;
     private bool isGrounded = false;
     private bool wantsToLeaveGround = false;
     private bool jumpAttempted = false;
     private bool jumpFlag = false;
 
-    public bool IsMoving { get { return rb.velocity.magnitude > 0.1f && xInput > 0 && !isGrounded; } }
+    #region Accessors
+    public bool IsMoving { get { return rb.velocity.magnitude > 0.1f && xInput != 0 && isGrounded; } }
     public bool IsGrounded { get { return isGrounded; } }
     public bool PlayerJumpFlag { get { return jumpFlag; } }
     public Vector2 CurrentNormal { get { return currentNormal; } }
+    public Vector2 LastVelocityBeforeCollision { get { return lastVelocityBeforeCollision; } }
+    public float HorizontalInput { get { return xInput; } }
+    #endregion
 
     private float jumpBufferTimer;
 
@@ -43,21 +84,37 @@ public class SethPlayerTest : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    public void SuspendAll()
+    {
+        canMove = false;
+        rb.isKinematic = true;
+        collider.enabled = false;
+        rb.velocity = Vector2.zero;
+    }
+
+    public void UnsuspendAll()
+    {
+        canMove = true;
+        rb.isKinematic = false;
+        collider.enabled = true;
+        rb.velocity = Vector2.zero;
+    }
+
     void Update()
     {
+        if (!canMove) return;
+
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 
+        holdingJumpKey = Input.GetKey(KeyCode.Space);
+
         TryQueueJump();
-
-
-        //Ray ray = new Ray(transform.position, -currentNormal);
-        //Debug.DrawRay(ray.origin, ray.direction * 3f, Color.cyan);
 
         // set current gravity based on whether or the not the player wants to leave the ground
 
-        if(!isGrounded || jumpFlag) {
+        if (!isGrounded || jumpFlag) {
             currentGravity = new Vector2(0.0f, 0.0f);
             rb.gravityScale = gravityMultiplier;
         }
@@ -66,6 +123,7 @@ public class SethPlayerTest : MonoBehaviour
         {
             currentGravity = -currentNormal.normalized * stickToNormalForce;
             rb.gravityScale = 0.0f;
+            jumpTrail.emitting = false;
         }
         
 
@@ -90,6 +148,7 @@ public class SethPlayerTest : MonoBehaviour
 
         if (jumpBufferTimer > 0 && isGrounded)
         {
+            sfxSource.PlayOneShot(jumpClip);
             wantsToLeaveGround = true;
             jumpBufferTimer = 0;
         }
@@ -97,38 +156,95 @@ public class SethPlayerTest : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canMove) return;
+
+        lastVelocityBeforeCollision = rb.velocity;
+
         vel += currentGravity;
 
         if (wantsToLeaveGround) {
-            wantsToLeaveGround = false;
-
-            jumpFlag = true;
-            Invoke(nameof(ResetJumpFlag), 0.06f);
-
-            rb.velocity = new Vector2(rb.velocity.x, 0.0f);
-
-            // as long as the player isnt on the ceiling
-            if(currentNormal.y != -1)
-                rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
-
-            rb.AddForce(Vector2.right * currentNormal.x * sideJumpForce, ForceMode2D.Impulse);
+            Jump();
             //rb.velocity = new Vector2(currentNormal.x * jumpForce, currentNormal.y * jumpForce);
         }
         else if(!jumpFlag && isGrounded)
         {
             rb.velocity = vel;
         }
+
+        // allow key press while jumping
+        if(Time.time < jumpTimeStamp + jumpTime && holdingJumpKey && !isGrounded) {
+            if(currentNormal.y > -0.5f) {
+                rb.AddForce(Vector2.up * additionalJumpForce, ForceMode2D.Force);
+            }
+        }
+
+        // air control
+        if (!isGrounded)
+        {
+            rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
+        }
     }
 
     private void ResetJumpFlag() => jumpFlag = false;
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & groundLayer) == 0)
+        {
+            if (((1 << collision.gameObject.layer) & nonstickLayer) != 0)
+            {
+                StartCoroutine(HitMagma());
+            }
+            return;
+        }
+
+        sfxSource.PlayOneShot(landClip);
+    }
+
+    IEnumerator HitMagma()
+    {
+        sfxSource.PlayOneShot(hitMagmaClip);
+
+        yield return new WaitForSeconds(0.08f);
+
+        GameManager.instance.SetTimeScale(0f, 0.01f);
+        CameraShake.instance.Shake(0.4f, 0.4f);
+
+        yield return new WaitForSecondsRealtime(0.1f);
+        sfxSource.PlayOneShot(soarMagmaClip);
+        yield return new WaitForSecondsRealtime(0.08f);
+        GameManager.instance.SetTimeScale(1f, 0.01f);
+
+        yield return null;
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         // ensure the player hit the ground mask
-        if(((1 << collision.gameObject.layer) & groundLayer) == 0) {
+        if (((1 << collision.gameObject.layer) & groundLayer) == 0) {
+            if(((1 << collision.gameObject.layer) & nonstickLayer) != 0)
+            {
+                magmaParticles.Play();
+
+                jumpFlag = true;
+                Invoke(nameof(ResetJumpFlag), 0.06f);
+
+                rb.velocity = Vector2.zero;
+
+                //if (currentNormal.y < 0.9f)
+                   // rb.AddForce(Vector2.up * magmaBoostForce.y, ForceMode2D.Impulse);
+
+                rb.AddForce(collision.contacts[0].normal * magmaBoostForce, ForceMode2D.Impulse);
+            }
+
             isGrounded = false;
 
             return;
+        }
+
+        if(!jumpFlag && isGrounded)
+        {
+            magmaParticles.Stop();
         }
 
         isGrounded = true;
@@ -165,6 +281,25 @@ public class SethPlayerTest : MonoBehaviour
         vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
 
         Debug.DrawRay(transform.position, currentNormal.normalized, Color.cyan);
+    }
+
+    private void Jump()
+    {
+        wantsToLeaveGround = false;
+
+        jumpFlag = true;
+        jumpTimeStamp = Time.time;
+        Invoke(nameof(ResetJumpFlag), 0.06f);
+
+        jumpTrail.emitting = true;
+
+        rb.velocity = new Vector2(rb.velocity.x, 0.0f);
+
+        // as long as the player isnt on the ceiling
+        if (currentNormal.y != -1)
+            rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
+
+        rb.AddForce(Vector2.right * currentNormal.x * sideJumpForce, ForceMode2D.Impulse);
     }
 
     private void OnCollisionExit2D(Collision2D collision)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerAnimationHandler : MonoBehaviour
@@ -8,6 +9,10 @@ public class PlayerAnimationHandler : MonoBehaviour
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private float upSmoothingInAir = 2.2f;
     [SerializeField] private float upSmoothingOnGround = 0.25f;
+
+    [SerializeField] private Sprite spriteLeft;
+    [SerializeField] private Sprite spriteRight;
+
     private SethPlayerTest movement;
 
     private bool jumping;
@@ -29,12 +34,15 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        if (movement.IsMoving)
-        {
+        if (movement.IsMoving)  {
             myAnimator.SetBool("Walking", true);
+            if(movement.HorizontalInput > 0) {
+                renderer.sprite = spriteRight;
+            } else if(movement.HorizontalInput < 0) {
+                renderer.sprite = spriteLeft;
+            }
         }
-        else
-        {
+        else {
             myAnimator.SetBool("Walking", false);
         }
 
@@ -65,12 +73,13 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateRotation()
     {
-        if (!movement.IsGrounded) {
-            renderer.transform.up = Vector3.Lerp(renderer.transform.up, Vector3.up, Time.deltaTime * upSmoothingInAir);
-        }
-        else {
-            renderer.transform.up = Vector3.Lerp(renderer.transform.up, movement.CurrentNormal, Time.deltaTime * upSmoothingOnGround);
-        }
-        
+        float angle = Vector3.Angle(transform.up, movement.CurrentNormal);
+        if (movement.CurrentNormal.x > 0) angle = -angle;
+
+        Quaternion fromQuat = renderer.transform.localRotation;
+        Quaternion toQuat = movement.IsGrounded ? Quaternion.AngleAxis(angle, Vector3.forward) : Quaternion.Euler(0,0,0);
+        float smoothingFactor = movement.IsGrounded ? upSmoothingOnGround : upSmoothingInAir;
+
+        renderer.transform.localRotation = Quaternion.Lerp(fromQuat, toQuat, Time.deltaTime * smoothingFactor);
     }
 }

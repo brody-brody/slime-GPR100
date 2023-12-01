@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelFinish : MonoBehaviour
 {
     public GameObject player;
-    private UpdatedPlayerMovement playerMovement;
+    public GameObject finishMenu;
+    private SethPlayerTest playerMovement;
 
     private void Start() {
-        playerMovement = player.GetComponent<UpdatedPlayerMovement>();
+        playerMovement = player.GetComponent<SethPlayerTest>();
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -17,6 +19,9 @@ public class LevelFinish : MonoBehaviour
                 return;
         Debug.Log("finish");
         playerMovement.enabled = false;
+        finishMenu.SetActive(true);
+        playerMovement.GetComponent<SethPlayerTest>().SuspendAll();
+
     }
 
 }

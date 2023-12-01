@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private LayerMask hitLayer;
     private Animator animator;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.gameObject.layer == 9)
+        if (collision.gameObject.layer == 9)
         {
-            Debug.Log("hit");
             animator.SetTrigger("Die");
         }
     }

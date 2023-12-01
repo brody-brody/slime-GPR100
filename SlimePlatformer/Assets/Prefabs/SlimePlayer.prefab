@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 5975716507104178449}
   - component: {fileID: 7548742664116504581}
   - component: {fileID: 3459170534949358646}
+  - component: {fileID: -1949648386507162782}
   m_Layer: 0
   m_Name: SlimePlayer
   m_TagString: Untagged
@@ -305,6 +306,21 @@ MonoBehaviour:
   upSmoothingOnGround: 15
   spriteLeft: {fileID: -1770135892, guid: 1f2cd443b3eaf43729c75005c7ace64d, type: 3}
   spriteRight: {fileID: 1603866799, guid: 1f2cd443b3eaf43729c75005c7ace64d, type: 3}
+--- !u!114 &-1949648386507162782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774606685574183679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923201e6ce19c4545a1f381b1448fe94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &2535094863086022585
 GameObject:
   m_ObjectHideFlags: 0

@@ -7149,7 +7149,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 555507243}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: PlayScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7421,7 +7421,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 896078947}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: PlayScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9811,7 +9811,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1428763395}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: PlayScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public delegate void LoadScene(int scene);
+    public delegate void LoadScene(string scene);
     static public LoadScene loadScene;
 
     /// <summary>
     ///Loads Scene passed through. Can be called with SceneLoader.loadScene?.Invoke(scene_number);
     /// </summary>
     /// <param name="scene"></param>
-    public void PlayScene(int scene)
+    public void PlayScene(string scene)
     {
         //Load passed through scene number
         SceneManager.LoadScene(scene);

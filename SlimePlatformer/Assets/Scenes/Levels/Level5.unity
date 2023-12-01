@@ -503,12 +503,12 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 500, y: 500, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
   m_Mode: 0
-  m_DetectChunkCullingBounds: 0
+  m_DetectChunkCullingBounds: 1
   m_MaskInteraction: 0
 --- !u!1839735485 &272264636
 Tilemap:
@@ -9919,7 +9919,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 328225156}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: PlayScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10343,7 +10343,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 790821320}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: PlayScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10466,12 +10466,12 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 500, y: 500, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
   m_Mode: 0
-  m_DetectChunkCullingBounds: 0
+  m_DetectChunkCullingBounds: 1
   m_MaskInteraction: 0
 --- !u!1839735485 &849971315
 Tilemap:
@@ -11124,7 +11124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1057889190}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
+        m_MethodName: PlayScene
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11444,11 +11444,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.050003
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.46
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11905,12 +11905,12 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 500, y: 500, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
   m_Mode: 0
-  m_DetectChunkCullingBounds: 0
+  m_DetectChunkCullingBounds: 1
   m_MaskInteraction: 0
 --- !u!1839735485 &1249976479
 Tilemap:

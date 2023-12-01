@@ -17,6 +17,7 @@ public class CameraShake : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        if (target == null) target = FindObjectOfType<Camera>();
         origin = target.transform.localPosition;
     }
 

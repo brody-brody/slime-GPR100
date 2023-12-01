@@ -102,11 +102,11 @@ public class SethPlayerTest : MonoBehaviour
 
     void Update()
     {
-        if (!canMove) return;
-
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
+
+        if (!canMove) return;
 
         holdingJumpKey = Input.GetKey(KeyCode.Space);
 
@@ -198,7 +198,7 @@ public class SethPlayerTest : MonoBehaviour
             return;
         }
 
-        sfxSource.PlayOneShot(landClip);
+        //sfxSource.PlayOneShot(landClip);
     }
 
     IEnumerator HitMagma()

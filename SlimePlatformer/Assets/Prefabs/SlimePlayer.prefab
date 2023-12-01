@@ -201,7 +201,7 @@ MonoBehaviour:
   jumpTrail: {fileID: 941180143693474886}
   sfxSource: {fileID: 2985493988355163533}
   jumpClip: {fileID: 8300000, guid: 3acff28e6113e4990b875d6ac522bd76, type: 3}
-  landClip: {fileID: 8300000, guid: e36e5226146f94f4aa9d56a9b6c7843a, type: 3}
+  landClip: {fileID: 8300000, guid: 119aa88c142c0412da5a7de8cb936762, type: 3}
   hitMagmaClip: {fileID: 8300000, guid: 74915cae2b5714bed990bc1175f1f19c, type: 3}
   soarMagmaClip: {fileID: 8300000, guid: 095c4b075d4ba49c28956d912df046b2, type: 3}
   collider: {fileID: 5975716507104178449}

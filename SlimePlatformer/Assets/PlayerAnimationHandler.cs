@@ -34,13 +34,18 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateAnimation()
     {
+        if (movement.HorizontalInput > 0)
+        {
+            renderer.sprite = spriteRight;
+        }
+        else if (movement.HorizontalInput < 0)
+        {
+            renderer.sprite = spriteLeft;
+        }
+
         if (movement.IsMoving)  {
             myAnimator.SetBool("Walking", true);
-            if(movement.HorizontalInput > 0) {
-                renderer.sprite = spriteRight;
-            } else if(movement.HorizontalInput < 0) {
-                renderer.sprite = spriteLeft;
-            }
+            
         }
         else {
             myAnimator.SetBool("Walking", false);

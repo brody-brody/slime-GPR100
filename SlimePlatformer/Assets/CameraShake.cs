@@ -31,7 +31,7 @@ public class CameraShake : MonoBehaviour
 
             target.transform.localPosition = new Vector3(origin.x + xAmt, origin.y + yAmt, origin.z);
 
-            shakePower = Mathf.MoveTowards(shakePower, 0.0f, shakeFadeTime * Time.deltaTime);
+            shakePower = Mathf.MoveTowards(shakePower, 0.0f, shakeFadeTime * Time.unscaledDeltaTime);
         }
     }
 

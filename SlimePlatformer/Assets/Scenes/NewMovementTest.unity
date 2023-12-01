@@ -9471,6 +9471,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.47
       objectReference: {fileID: 0}
+    - target: {fileID: 6601881138965580331, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

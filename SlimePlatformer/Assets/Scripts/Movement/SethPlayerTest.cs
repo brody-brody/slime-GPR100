@@ -164,6 +164,8 @@ public class SethPlayerTest : MonoBehaviour
             if(((1 << collision.gameObject.layer) & nonstickLayer) != 0)
             {
                 magmaParticles.Play();
+                CameraShake.instance.Shake(0.3f, 0.4f);
+
                 jumpFlag = true;
                 Invoke(nameof(ResetJumpFlag), 0.06f);
 

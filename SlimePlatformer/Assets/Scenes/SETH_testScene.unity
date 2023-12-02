@@ -1727,11 +1727,43 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391090287}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.37, y: -0.15, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.37, y: -0.1500001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
+  m_Father: {fileID: 680144471}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &408464933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 408464934}
+  m_Layer: 0
+  m_Name: Eye Right Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &408464934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408464933}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 543869868}
   m_Father: {fileID: 439300461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &422667072
@@ -1821,7 +1853,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 439300461}
-  - component: {fileID: 439300460}
   m_Layer: 0
   m_Name: Snail Parent
   m_TagString: Untagged
@@ -1829,29 +1860,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &439300460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439300459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c57cdb71d5494126a9154768d647459, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprite: {fileID: 680144472}
-  eyeLeft: {fileID: 1135411878}
-  eyeRight: {fileID: 543869869}
-  shellDamageSprites: []
-  eyeballNormal: {fileID: 0}
-  eyeballLeftHurt: {fileID: 0}
-  eyeballRightHurt: {fileID: 0}
-  eyePositionLeft: {fileID: 957846120}
-  eyePositionRight: {fileID: 391090288}
-  eyePositionSmoothing: 0
-  randomEyeSpeed: {x: 0, y: 0}
 --- !u!4 &439300461
 Transform:
   m_ObjectHideFlags: 0
@@ -1866,10 +1874,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 680144471}
-  - {fileID: 1135411877}
-  - {fileID: 543869868}
-  - {fileID: 957846120}
-  - {fileID: 391090288}
+  - {fileID: 408464934}
+  - {fileID: 1162892549}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &452168328
@@ -1993,11 +1999,11 @@ Transform:
   m_GameObject: {fileID: 543869867}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.36, y: -0.1, z: 0}
+  m_LocalPosition: {x: -0.36, y: -0.099999905, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 439300461}
+  m_Father: {fileID: 408464934}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &543869869
 SpriteRenderer:
@@ -2039,7 +2045,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 5
   m_Sprite: {fileID: -498328661, guid: fb291cd95552e4e06bf2bc439b834954, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3192,6 +3198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 680144471}
   - component: {fileID: 680144472}
+  - component: {fileID: 680144473}
   m_Layer: 0
   m_Name: Snail Body
   m_TagString: Untagged
@@ -3211,7 +3218,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 957846120}
+  - {fileID: 391090288}
   m_Father: {fileID: 439300461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &680144472
@@ -3266,6 +3275,30 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &680144473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680144470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c57cdb71d5494126a9154768d647459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 680144472}
+  eyeLeft: {fileID: 1135411878}
+  eyeRight: {fileID: 543869869}
+  shellDamageSprites: []
+  eyeballNormal: {fileID: -498328661, guid: fb291cd95552e4e06bf2bc439b834954, type: 3}
+  eyeballLeftHurt: {fileID: -592959405, guid: fb291cd95552e4e06bf2bc439b834954, type: 3}
+  eyeballRightHurt: {fileID: 831074010, guid: fb291cd95552e4e06bf2bc439b834954, type: 3}
+  eyePositionLeft: {fileID: 1162892549}
+  eyePositionRight: {fileID: 408464934}
+  eyeLeftPositionSmoothing: 10.5
+  eyeRightPositionSmoothing: 7
+  randomEyeSpeed: {x: 1, y: 2}
 --- !u!114 &732023972 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 365244446970450224, guid: d9316445ae7e04387a2ba0dd15f936a5, type: 3}
@@ -6929,12 +6962,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957846119}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.12, y: 0.04, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.1199999, y: 0.03999996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 439300461}
+  m_Father: {fileID: 680144471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &984767691
 PrefabInstance:
@@ -9850,11 +9883,11 @@ Transform:
   m_GameObject: {fileID: 1135411876}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.17, y: 0.11, z: 0}
+  m_LocalPosition: {x: -1.1700001, y: 0.11000013, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 439300461}
+  m_Father: {fileID: 1162892549}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1135411878
 SpriteRenderer:
@@ -9896,7 +9929,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 4
   m_Sprite: {fileID: -498328661, guid: fb291cd95552e4e06bf2bc439b834954, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -9908,6 +9941,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1162892548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1162892549}
+  m_Layer: 0
+  m_Name: Eye Left Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1162892549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162892548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1135411877}
+  m_Father: {fileID: 439300461}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1169756689
 PrefabInstance:
   m_ObjectHideFlags: 0

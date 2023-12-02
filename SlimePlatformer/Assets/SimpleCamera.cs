@@ -9,9 +9,12 @@ public class SimpleCamera : MonoBehaviour
     [SerializeField] private Vector2 smoothTime;
 
     Vector3 vel;
+    bool locked = false;
 
     void LateUpdate()
     {
+        if (locked) return;
+
         if (isSmoothed)
         {
             Vector3 currentPos = transform.position;
@@ -31,4 +34,9 @@ public class SimpleCamera : MonoBehaviour
     }
 
     public void ChangeSmoothing(bool smooth) => isSmoothed = smooth;
+
+    public void Lock(bool lockState)
+    {
+        locked = lockState;
+    }
 }

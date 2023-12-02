@@ -92,6 +92,8 @@ public class SlimeBaby : MonoBehaviour
             }
             else
             {
+                player.GetComponent<Health>().TakeDamage(1);
+
                 player.SetJumpFlagTemporarily();
                 rb.velocity = new Vector2(0.0f, 0.0f);
 

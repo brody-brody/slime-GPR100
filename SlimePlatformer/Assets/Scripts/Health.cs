@@ -31,7 +31,7 @@ public class Health : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         //Guard Clause
         if (!canDamage)

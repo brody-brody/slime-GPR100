@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public Transform player;
     // this will handle all the game stuff - ssseth triidnelssfdale
     public int coins = 0;
 

@@ -8,7 +8,11 @@ public class Health : MonoBehaviour
     private Animator animator;
     private SethPlayerTest movement;
 
-    [SerializeField] private float invFrames;
+    private Rigidbody2D rb;
+
+    [SerializeField] private float 
+        invFrames = 2,
+        interval = 0.1f;
 
     [SerializeField] private SpriteRenderer sprite;
 
@@ -24,6 +28,7 @@ public class Health : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         movement = GetComponent<SethPlayerTest>();
+        rb = GetComponent<Rigidbody2D>();
     }
     private void TakeDamage(int damage)
     {
@@ -39,20 +44,22 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             animator.SetTrigger("Die");
-            player.isStatic = true;
             movement.enabled = false;
+            rb.velocity = Vector2.zero;
         }
     }
 
     IEnumerator IFrame(float frames)
     {
         //Player Flash
-        for (int i = 0; i < frames; i++)
+        for (int i = 0; i < 8; i++)
         {
+            yield return new WaitForSeconds(interval);
             sprite.enabled = !sprite.enabled;
         }
+        yield return new WaitForSeconds(frames);
         canDamage = true;
-        yield return null;
+        sprite.enabled = true;
     }
     /// <summary>
     /// Called by Animator

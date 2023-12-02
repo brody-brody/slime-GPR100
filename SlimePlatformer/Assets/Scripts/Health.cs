@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
         movement = GetComponent<SethPlayerTest>();
         rb = GetComponent<Rigidbody2D>();
     }
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         //Guard Clause
         if (!canDamage)
@@ -60,12 +60,13 @@ public class Health : MonoBehaviour
     IEnumerator IFrame(float frames)
     {
         //Player Flash
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < invFrames; i++)
         {
-            yield return new WaitForSeconds(interval);
             sprite.enabled = !sprite.enabled;
+            yield return new WaitForSeconds(interval);
         }
-        yield return new WaitForSeconds(frames);
+
+        yield return null;
         canDamage = true;
         sprite.enabled = true;
     }

@@ -134,6 +134,10 @@ public class SquishPoint : MonoBehaviour
         if (targetPoint == null) Debug.Log("Could not move " + attemptedDir + "!");
         else
         {
+            source.clip = railSound;
+            source.loop = true;
+            source.Play();
+
             StartCoroutine(MoveToPoint(targetPoint));
         }
     }
@@ -202,10 +206,6 @@ public class SquishPoint : MonoBehaviour
 
     private IEnumerator MoveToPoint(SquishPointData data)
     {
-        source.clip = railSound;
-        source.loop = true;
-        source.Play();
-
         moving = true;
 
         float distance = Vector2.Distance(player.transform.position, data.point.transform.position);
@@ -214,17 +214,16 @@ public class SquishPoint : MonoBehaviour
         yield return LerpToPosition(player.transform.position, data.point.transform.position, duration);
         CameraShake.instance.Shake(0.34f, 0.2f);
 
+        source.loop = false;
+        source.Stop();
+        source.PlayOneShot(reachPointSound);
+
         yield return new WaitForSeconds(0.1f);
 
         data.point.readyToMove = true;
         readyToMove = false;
         enteredOnSelf = false;
         moving = false;
-
-        source.loop = false;
-        source.Stop();
-
-        source.PlayOneShot(reachPointSound);
 
         yield return null;
     }

@@ -31,10 +31,6 @@ public class Health : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E)) TakeDamage(1);
-    }
     private void TakeDamage(int damage)
     {
         //Guard Clause

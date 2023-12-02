@@ -7675,6 +7675,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1418548612}
+    - target: {fileID: -1949648386507162782, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 1114178207}
+    - target: {fileID: -1949648386507162782, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+      propertyPath: invFrames
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 774606685574183679, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_Name
       value: SlimePlayer
@@ -7741,6 +7749,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+--- !u!212 &1114178207 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 851340390113898137, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+  m_PrefabInstance: {fileID: 994805017}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1418548612 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 774606685574183679, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}

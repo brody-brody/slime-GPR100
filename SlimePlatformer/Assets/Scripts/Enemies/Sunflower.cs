@@ -45,4 +45,9 @@ public class Sunflower : MonoBehaviour
         currentVelocity = new(Vector2.Perpendicular(currentNormal).x * speed, speed * Vector2.Perpendicular(currentNormal).y);
         Debug.DrawRay(transform.position, currentNormal * 2, Color.gray);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 9)
+            Health.takeDamage(3);
+    }
 }

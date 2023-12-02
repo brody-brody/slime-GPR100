@@ -32,8 +32,13 @@ public class Projectile : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 6 || collision.gameObject.layer == 3)
+        if (collision.gameObject.layer == 6)
         {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == 3)
+        {
+            Health.takeDamage(1);
             Destroy(gameObject);
         }
     }

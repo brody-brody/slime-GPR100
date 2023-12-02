@@ -12,10 +12,10 @@ public class SceneLoader : MonoBehaviour
     ///Loads Scene passed through. Can be called with SceneLoader.loadScene?.Invoke(scene_number);
     /// </summary>
     /// <param name="scene"></param>
-    public void PlayScene(string scene)
+    public void PlayScene(string sceneName)
     {
         //Load passed through scene number
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(sceneName);
     }
 
     //To Prevent the delegate from being called twice

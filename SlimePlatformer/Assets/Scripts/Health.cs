@@ -22,7 +22,9 @@ public class Health : MonoBehaviour
             movement.enabled = false;
         }
     }
-
+    /// <summary>
+    /// Called by Animator
+    /// </summary>
     private void DeathScreen()
     {
         DeathManager.enableScreen?.Invoke();

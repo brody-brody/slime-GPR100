@@ -25,7 +25,7 @@ public class Sentry : MonoBehaviour
     [SerializeField] private float rotationSpeed = 10;
 
 
-    private readonly float rotationModifier = 90;
+    private readonly float rotationModifier = 180;
     private float fireRateTime = 3;
     private float remainingDistance;
 

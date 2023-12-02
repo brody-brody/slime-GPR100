@@ -121,13 +121,14 @@ public class SnailEnemy : MonoBehaviour
 
         rb.velocity = new Vector2(speed * dir, rb.velocity.y);
 
-        Ray ray = new Ray(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right * dir);
+        Vector2 check1Pos = new Vector2(transform.position.x, transform.position.y + 0.25f);
+        Vector2 check2Pos = new Vector2(transform.position.x, transform.position.y - 0.15f);
 
-        if(Physics2D.Raycast(ray.origin, ray.direction * 1.5f, 1.5f, hitWallDetectionMask)) {
+        if(Physics2D.Raycast(check1Pos, Vector2.right * dir * 1.5f, 1.5f, hitWallDetectionMask) || Physics2D.Raycast(check2Pos, Vector2.right * dir * 1.5f, 1.5f, hitWallDetectionMask)) {
             FlipDirection();
         }
         // no ground??
-        if(!Physics2D.Raycast(ray.origin + (ray.direction * 1.2f), Vector2.down * 1.5f, 1.5f, hitWallDetectionMask))
+        if(!Physics2D.Raycast(check1Pos + (Vector2.right * dir * 1.2f), Vector2.down * 1.5f, 1.5f, hitWallDetectionMask))
         {
             FlipDirection();
         }

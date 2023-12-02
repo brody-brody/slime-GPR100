@@ -30,6 +30,11 @@ public class Health : MonoBehaviour
         movement = GetComponent<SethPlayerTest>();
         rb = GetComponent<Rigidbody2D>();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E)) TakeDamage(1);
+    }
     private void TakeDamage(int damage)
     {
         //Guard Clause
@@ -39,7 +44,7 @@ public class Health : MonoBehaviour
         canDamage = false;
         health -= damage;
 
-        StartCoroutine(IFrame(invFrames));
+        StartCoroutine(IFrame());
 
         if (health <= 0)
         {
@@ -49,15 +54,16 @@ public class Health : MonoBehaviour
         }
     }
 
-    IEnumerator IFrame(float frames)
+    IEnumerator IFrame()
     {
         //Player Flash
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < invFrames; i++)
         {
-            yield return new WaitForSeconds(interval);
             sprite.enabled = !sprite.enabled;
+            yield return new WaitForSeconds(interval);
         }
-        yield return new WaitForSeconds(frames);
+
+        yield return null;
         canDamage = true;
         sprite.enabled = true;
     }

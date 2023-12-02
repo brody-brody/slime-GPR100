@@ -12,6 +12,8 @@ public class SnailEnemy : MonoBehaviour
     [Header("Player Interactions")]
     [SerializeField] private float playerBoostUpForce = 16.0f;
     [SerializeField] private Vector2 playerHurtForce = new Vector2(12, 15);
+    [SerializeField] private SlimeBaby child;
+    [SerializeField] private int childCount = 3;
 
     [Header("Renderer References")]
     [SerializeField] private SpriteRenderer sprite;
@@ -28,6 +30,10 @@ public class SnailEnemy : MonoBehaviour
     [SerializeField] private LineRenderer leftEyeAntenna;
     [SerializeField] private LineRenderer rightEyeAntenna;
     [SerializeField] private ParticleSystem deathParticle;
+
+    [Header("SFX")]
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip crackShellSound;
 
     [Header("Eye Position")]
     [SerializeField] private Transform eyeLeftHolder;
@@ -117,14 +123,9 @@ public class SnailEnemy : MonoBehaviour
 
         Ray ray = new Ray(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right * dir);
 
-        Debug.DrawRay(ray.origin, ray.direction * 1.5f, Color.blue);
-
         if(Physics2D.Raycast(ray.origin, ray.direction * 1.5f, 1.5f, hitWallDetectionMask)) {
             FlipDirection();
         }
-
-        Debug.DrawRay(ray.origin + (ray.direction), Vector2.down * 2f, Color.green);
-
         // no ground??
         if(!Physics2D.Raycast(ray.origin + (ray.direction * 1.2f), Vector2.down * 1.5f, 1.5f, hitWallDetectionMask))
         {
@@ -169,6 +170,8 @@ public class SnailEnemy : MonoBehaviour
     {
         health--;
 
+        source.PlayOneShot(crackShellSound);
+        CameraShake.instance.Shake(0.15f, 0.2f);
         StartCoroutine(TakeDamage());
 
         if (health == 2)
@@ -229,6 +232,8 @@ public class SnailEnemy : MonoBehaviour
 
         if(health <= 0)
         {
+            SpawnChildren();
+
             Instantiate(deathParticle, transform.position, Quaternion.identity);
             Destroy(gameObject.transform.parent.gameObject);
         }
@@ -236,5 +241,16 @@ public class SnailEnemy : MonoBehaviour
         FlipDirection();
 
         playingDamageAnim = false;
+    }
+
+    private void SpawnChildren()
+    {
+        for(int i = 0; i < childCount; i++)
+        {
+            SlimeBaby baby = Instantiate(child, transform.position, Quaternion.identity);
+            baby.RandomizeDirection();
+            Rigidbody2D rb = baby.GetComponent<Rigidbody2D>();
+            rb.AddForce(new Vector2(Random.Range(-3, 3), 4.0f), ForceMode2D.Impulse);
+        }
     }
 }

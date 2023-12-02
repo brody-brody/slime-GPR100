@@ -8,25 +8,73 @@ public class Health : MonoBehaviour
     private Animator animator;
     private SethPlayerTest movement;
 
+    private Rigidbody2D rb;
+
+    [SerializeField] private float 
+        invFrames = 2,
+        interval = 0.1f;
+
+    [SerializeField] private SpriteRenderer sprite;
+
+    private int health = 3;
+
+    private bool canDamage = true;
+
+    //Call Delegate to deal damage. Called by enemies
+    public delegate void Damage(int damage);
+    public static Damage takeDamage;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
         movement = GetComponent<SethPlayerTest>();
+        rb = GetComponent<Rigidbody2D>();
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void TakeDamage(int damage)
     {
-        if (collision.gameObject.layer == 9)
+        //Guard Clause
+        if (!canDamage)
+            return;
+
+        canDamage = false;
+        health -= damage;
+
+        StartCoroutine(IFrame(invFrames));
+
+        if (health <= 0)
         {
             animator.SetTrigger("Die");
-            player.isStatic = true;
             movement.enabled = false;
+            rb.velocity = Vector2.zero;
         }
     }
 
+    IEnumerator IFrame(float frames)
+    {
+        //Player Flash
+        for (int i = 0; i < 8; i++)
+        {
+            yield return new WaitForSeconds(interval);
+            sprite.enabled = !sprite.enabled;
+        }
+        yield return new WaitForSeconds(frames);
+        canDamage = true;
+        sprite.enabled = true;
+    }
+    /// <summary>
+    /// Called by Animator
+    /// </summary>
     private void DeathScreen()
     {
         DeathManager.enableScreen?.Invoke();
         animator.enabled = false;
     }
-
+    private void OnEnable()
+    {
+        takeDamage += TakeDamage;
+    }
+    private void OnDisable()
+    {
+        takeDamage -= TakeDamage;
+    }
 }

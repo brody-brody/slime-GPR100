@@ -302,6 +302,12 @@ public class SethPlayerTest : MonoBehaviour
         rb.AddForce(Vector2.right * currentNormal.x * sideJumpForce, ForceMode2D.Impulse);
     }
 
+    public void SetJumpFlagTemporarily()
+    {
+        jumpFlag = true;
+        Invoke(nameof(ResetJumpFlag), 0.06f);
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         isGrounded = false;

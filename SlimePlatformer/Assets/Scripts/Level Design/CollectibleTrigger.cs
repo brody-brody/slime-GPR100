@@ -9,7 +9,6 @@ public class CollectibleTrigger : MonoBehaviour
 	public GameManager gameManager;
 	public Image coin1, coin2, coin3;
 
-	// automatically set UI coins into inspector slots
 	private void Start()
 	{
 		coin1 = GameObject.Find("Coin1UI").GetComponent<Image>();

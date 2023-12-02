@@ -86,7 +86,7 @@ public class SquishPoint : MonoBehaviour
 
 
         if (Vector2.Distance(player.transform.position, transform.position) < 0.1f) { }
-        else if (Vector2.Distance(player.transform.position, transform.position) > 0.5f || (int)GetInputDirection() != -(int)exitDirection) return;
+        else if (Vector2.Distance(player.transform.position, transform.position) > 1.1f || (int)GetInputDirection() != -(int)exitDirection) return;
 
         isPlayerEntered = true;
         enteredOnSelf = true;

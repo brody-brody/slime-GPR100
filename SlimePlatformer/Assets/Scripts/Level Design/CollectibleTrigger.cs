@@ -8,7 +8,6 @@ public class CollectibleTrigger : MonoBehaviour
 	// initializing # of coins and images of coins present on canvas
 	public GameManager gameManager;
 
-
 	private void Start()
 	{
 		gameManager = FindObjectOfType<GameManager>();

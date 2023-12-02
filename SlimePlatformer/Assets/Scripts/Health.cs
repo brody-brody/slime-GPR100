@@ -36,11 +36,14 @@ public class Health : MonoBehaviour
         if (!canDamage)
             return;
 
+        //Player damage and invincibility
         canDamage = false;
         health -= damage;
 
+        //Start flashing and I-frames
         StartCoroutine(IFrame(invFrames));
 
+        //Death
         if (health <= 0)
         {
             animator.SetTrigger("Die");
@@ -49,6 +52,11 @@ public class Health : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays after getting hit. Player flashes then becomes vunlrable again.
+    /// </summary>
+    /// <param name="frames"></param>
+    /// <returns></returns>
     IEnumerator IFrame(float frames)
     {
         //Player Flash

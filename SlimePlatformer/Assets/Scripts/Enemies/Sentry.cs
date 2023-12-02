@@ -9,7 +9,7 @@ public enum Type
 }
 public class Sentry : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    private Transform player;
     [SerializeField] private Transform spawnPoint;
 
     private Projectile currentProjectile;
@@ -38,6 +38,8 @@ public class Sentry : MonoBehaviour
         fireRateTime = fireRate;
 
         particle = GetComponent<ParticleSystem>();
+
+        player = GameManager.instance.player;
     }
 
     // Update is called once per frame
@@ -88,22 +90,23 @@ public class Sentry : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        Debug.DrawLine(transform.position, player.position);
+        //Debug
+        //Debug.DrawLine(transform.position, player.position);
+
+
         fireRateTime -= Time.deltaTime;
         if (fireRateTime < 0)
         {
+            //Spawn bullet and get its foward direction at the time of spawning
             currentProjectile = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation).GetComponent<Projectile>();
             currentProjectile.target = spawnPoint.up;
-            Debug.DrawRay(spawnPoint.position, spawnPoint.up * 3, Color.cyan, 5f);
+            
+            //Debug
+            //Debug.DrawRay(spawnPoint.position, spawnPoint.up * 3, Color.cyan, 5f);
+
             fireRateTime = fireRate;
         }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 3)
-        {
-            SelfDestruct();
-        }
+
     }
     void SelfDestruct()
     {

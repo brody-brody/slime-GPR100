@@ -5,16 +5,35 @@ using UnityEngine;
 public class SlimeBaby : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private float speed = 6.0f;
+    [SerializeField] private float speedVariation = 0.5f;
+    [SerializeField] private float playerBoostForce = 12.0f;
+    [SerializeField] private Vector2 playerHurtForce = new Vector2(6, 5);
     [SerializeField] private LayerMask groundLayer;
+
+    [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Collider2D collider;
+    [SerializeField] private SpriteRenderer sprite;
+
+    [Header("SFX")]
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip deathClip;
 
     bool isGrounded = false;
+    bool isDead = false;
+
     int dir = 1;
+
+    private void Start()
+    {
+        speed = speed + Random.Range(-speedVariation, speedVariation);
+    }
 
     private void Update()
     {
+        if (isDead) return;
+
         if (isGrounded)
         {
             Ray ray = new Ray(new Vector2(transform.position.x, transform.position.y + 0.53f), Vector2.right * dir);
@@ -39,10 +58,64 @@ public class SlimeBaby : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<SethPlayerTest>())
+
+        /**
+         * 
+         *             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
+            if (player.transform.position.y > transform.position.y + 0.45)
+            {
+                // bounce player
+                rb.velocity = new Vector2(rb.velocity.x, 0.0f);
+                rb.AddForce(Vector2.up * playerBoostUpForce, ForceMode2D.Impulse);
+
+                Hit();
+            }
+            else
+            {
+                player.SetJumpFlagTemporarily();
+                rb.velocity = new Vector2(0.0f, 0.0f);
+                
+                rb.AddForce(new Vector2(Mathf.Sign(player.transform.position.x - transform.position.x) * playerHurtForce.x, playerHurtForce.y), ForceMode2D.Impulse);
+
+                Debug.Log(Mathf.Sign(player.transform.position.x - transform.position.x));*/
+        if (collision.gameObject.TryGetComponent<SethPlayerTest>(out SethPlayerTest player))
         {
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
+            if (player.transform.position.y > transform.position.y + 0.45f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0.0f);
+                rb.AddForce(Vector2.up * playerBoostForce, ForceMode2D.Impulse);
+
+                DeathAnim();
+            }
+            else
+            {
+                player.SetJumpFlagTemporarily();
+                rb.velocity = new Vector2(0.0f, 0.0f);
+
+                rb.AddForce(new Vector2(Mathf.Sign(player.transform.position.x - transform.position.x) * playerHurtForce.x, playerHurtForce.y), ForceMode2D.Impulse);
+            }
             dir = -dir;
         }
+    }
+
+    private void DeathAnim()
+    {
+        collider.enabled = false;
+        rb.velocity = Vector2.zero;
+        isDead = true;
+
+        rb.freezeRotation = false;
+        rb.angularVelocity = Random.Range(150, 200) * dir;
+        rb.AddForce(Vector2.up * 12.0f, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.right * dir * 3.0f, ForceMode2D.Impulse);
+
+        source.clip = deathClip;
+        source.Play();
+
+        Destroy(gameObject, 1.5f);
     }
 
     public void RandomizeDirection()

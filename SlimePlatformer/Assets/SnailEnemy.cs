@@ -144,7 +144,7 @@ public class SnailEnemy : MonoBehaviour
         {
             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
 
-            if (player.transform.position.y > transform.position.y - 0.25f)
+            if (player.transform.position.y > transform.position.y + 0.45)
             {
                 // bounce player
                 rb.velocity = new Vector2(rb.velocity.x, 0.0f);

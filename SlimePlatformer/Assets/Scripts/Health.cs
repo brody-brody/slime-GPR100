@@ -10,7 +10,8 @@ public class Health : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    [SerializeField] private float 
+    [SerializeField]
+    private float
         invFrames = 2,
         interval = 0.1f;
 
@@ -30,20 +31,18 @@ public class Health : MonoBehaviour
         movement = GetComponent<SethPlayerTest>();
         rb = GetComponent<Rigidbody2D>();
     }
+
     public void TakeDamage(int damage)
     {
         //Guard Clause
         if (!canDamage)
             return;
 
-        //Player damage and invincibility
         canDamage = false;
         health -= damage;
 
-        //Start flashing and I-frames
-        StartCoroutine(IFrame(invFrames));
+        StartCoroutine(IFrame());
 
-        //Death
         if (health <= 0)
         {
             animator.SetTrigger("Die");
@@ -52,12 +51,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Plays after getting hit. Player flashes then becomes vunlrable again.
-    /// </summary>
-    /// <param name="frames"></param>
-    /// <returns></returns>
-    IEnumerator IFrame(float frames)
+    IEnumerator IFrame()
     {
         //Player Flash
         for (int i = 0; i < invFrames; i++)

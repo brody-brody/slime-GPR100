@@ -108,10 +108,4 @@ public class Sentry : MonoBehaviour
         }
 
     }
-    void SelfDestruct()
-    {
-        particle.Play();
-        //Add in delay at some point so particle can play
-        Destroy(gameObject);
-    }
 }

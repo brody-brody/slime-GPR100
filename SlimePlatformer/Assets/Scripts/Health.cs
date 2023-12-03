@@ -79,8 +79,9 @@ public class Health : MonoBehaviour
     /// </summary>
     private void DeathScreen()
     {
-        DeathManager.enableScreen?.Invoke();
+        //DeathManager.enableScreen?.Invoke();
         animator.enabled = false;
+        //SceneLoader.loadScene?.Invoke();
     }
     private void OnEnable()
     {

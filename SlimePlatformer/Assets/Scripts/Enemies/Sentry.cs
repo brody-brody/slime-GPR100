@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Firing Modes
 public enum Type
 {
     track,
@@ -9,7 +10,7 @@ public enum Type
 }
 public class Sentry : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    private Transform player;
     [SerializeField] private Transform spawnPoint;
 
     private Projectile currentProjectile;
@@ -17,15 +18,13 @@ public class Sentry : MonoBehaviour
 
     [SerializeField] private Type currentType;
 
-    private ParticleSystem particle;
-
     [Header("Sentry Settings")]
     [SerializeField] private float detectionRange = 4;
     [SerializeField] private float fireRate = 3;
     [SerializeField] private float rotationSpeed = 10;
 
 
-    private readonly float rotationModifier = 90;
+    private float rotationModifier = 180;
     private float fireRateTime = 3;
     private float remainingDistance;
 
@@ -37,7 +36,7 @@ public class Sentry : MonoBehaviour
         //Scalable so you don't have to change anything within script
         fireRateTime = fireRate;
 
-        particle = GetComponent<ParticleSystem>();
+        player = GameManager.instance.player;
     }
 
     // Update is called once per frame
@@ -88,27 +87,22 @@ public class Sentry : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        Debug.DrawLine(transform.position, player.position);
+        //Debug
+        //Debug.DrawLine(transform.position, player.position);
+
+
         fireRateTime -= Time.deltaTime;
         if (fireRateTime < 0)
         {
+            //Spawn bullet and get its foward direction at the time of spawning
             currentProjectile = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation).GetComponent<Projectile>();
             currentProjectile.target = spawnPoint.up;
-            Debug.DrawRay(spawnPoint.position, spawnPoint.up * 3, Color.cyan, 5f);
+            
+            //Debug
+            //Debug.DrawRay(spawnPoint.position, spawnPoint.up * 3, Color.cyan, 5f);
+
             fireRateTime = fireRate;
         }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 3)
-        {
-            SelfDestruct();
-        }
-    }
-    void SelfDestruct()
-    {
-        particle.Play();
-        //Add in delay at some point so particle can play
-        Destroy(gameObject);
+
     }
 }

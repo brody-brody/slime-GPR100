@@ -189,16 +189,17 @@ public class SethPlayerTest : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (((1 << collision.gameObject.layer) & groundLayer) == 0)
         {
             if (((1 << collision.gameObject.layer) & nonstickLayer) != 0)
             {
+                jumpTrail.enabled = false;
                 StartCoroutine(HitMagma());
             }
+            else
             return;
         }
-
-        //sfxSource.PlayOneShot(landClip);
     }
 
     IEnumerator HitMagma()
@@ -242,7 +243,7 @@ public class SethPlayerTest : MonoBehaviour
             return;
         }
 
-        if(!jumpFlag && isGrounded)
+        if(isGrounded && !jumpFlag)
         {
             magmaParticles.Stop();
         }
@@ -300,6 +301,12 @@ public class SethPlayerTest : MonoBehaviour
             rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
 
         rb.AddForce(Vector2.right * currentNormal.x * sideJumpForce, ForceMode2D.Impulse);
+    }
+
+    public void SetJumpFlagTemporarily()
+    {
+        jumpFlag = true;
+        Invoke(nameof(ResetJumpFlag), 0.06f);
     }
 
     private void OnCollisionExit2D(Collision2D collision)

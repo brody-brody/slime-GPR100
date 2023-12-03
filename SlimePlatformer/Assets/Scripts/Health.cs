@@ -32,17 +32,24 @@ public class Health : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// Deal damage to the player. Called with Health.takeDamage?.Invoke(1);
+    /// </summary>
+    /// <param name="damage"></param>
     public void TakeDamage(int damage)
     {
         //Guard Clause
         if (!canDamage)
             return;
 
+        //Deal damage
         canDamage = false;
         health -= damage;
 
+        //Start flashing
         StartCoroutine(IFrame());
 
+        //Death
         if (health <= 0)
         {
             animator.SetTrigger("Die");
@@ -50,7 +57,10 @@ public class Health : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
-
+    /// <summary>
+    /// Makes player invincable and flash.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator IFrame()
     {
         //Player Flash

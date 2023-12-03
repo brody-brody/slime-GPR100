@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sunflower : MonoBehaviour
+public class Salamander : MonoBehaviour
 {
-
+    [Header("Salamander Movement Settings")]
     [SerializeField] private float gravityMultiplier = 9.806f;
     [SerializeField] private float stickToNormalForce = 15.0f;
 
@@ -23,6 +23,8 @@ public class Sunflower : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        //Get player location
         player = GameManager.instance.player;
     }
 
@@ -32,8 +34,10 @@ public class Sunflower : MonoBehaviour
         //Rotates Enemy
         gameObject.transform.Rotate(0, 0, 10 / 10);
 
+        //Set enemies gravity
         currentGravity = -currentNormal.normalized * stickToNormalForce;
 
+        //Collision detection
         if (Vector2.Distance(transform.position, player.position) < 0.5f)
         {
             //Damages player for 3 health
@@ -42,22 +46,21 @@ public class Sunflower : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        //Add normalized gravity to current velocity
         currentVelocity += currentGravity;
 
         rb.velocity = currentVelocity;
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
+        //Find normal from current surface, takes only one normal at a time
         if (collision.contactCount > 1)
         {
             currentNormal = collision.contacts[1].normal;
         }
         currentVelocity = new(Vector2.Perpendicular(currentNormal).x * speed, speed * Vector2.Perpendicular(currentNormal).y);
-        Debug.DrawRay(transform.position, currentNormal * 2, Color.gray);
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 3)
-            Health.takeDamage(3);
+
+        //Debug
+        //Debug.DrawRay(transform.position, currentNormal * 2, Color.gray);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DeathManager : MonoBehaviour
 {
+    //Mainly used to enable the canvas without much coupling.
+
     public delegate void DeathScreen();
     public static DeathScreen enableScreen;
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Firing Modes
 public enum Type
 {
     track,
@@ -17,15 +18,13 @@ public class Sentry : MonoBehaviour
 
     [SerializeField] private Type currentType;
 
-    private ParticleSystem particle;
-
     [Header("Sentry Settings")]
     [SerializeField] private float detectionRange = 4;
     [SerializeField] private float fireRate = 3;
     [SerializeField] private float rotationSpeed = 10;
 
 
-    private readonly float rotationModifier = 180;
+    private float rotationModifier = 180;
     private float fireRateTime = 3;
     private float remainingDistance;
 
@@ -36,8 +35,6 @@ public class Sentry : MonoBehaviour
     {
         //Scalable so you don't have to change anything within script
         fireRateTime = fireRate;
-
-        particle = GetComponent<ParticleSystem>();
 
         player = GameManager.instance.player;
     }

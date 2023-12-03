@@ -23,6 +23,7 @@ public class SquishPoint : MonoBehaviour
 
     [Header("Exit Variables")]
     [SerializeField] private Direction exitDirection;
+    [SerializeField] private float pipeBoostUpForce = 17;
 
     [Header("SFX")]
     [SerializeField] private AudioSource source;
@@ -177,7 +178,14 @@ public class SquishPoint : MonoBehaviour
                 break;
         }
 
-        yield return StartCoroutine(LerpToPosition(player.transform.position, transform.position + moveOffset, 0.5f));
+        if (exitDirection == Direction.Up)
+        {
+            yield return StartCoroutine(LerpToPosition(player.transform.position, transform.position + moveOffset, 0.01f));
+        }
+        else
+        {
+            yield return StartCoroutine(LerpToPosition(player.transform.position, transform.position + moveOffset, 0.5f));
+        }
 
         FindObjectOfType<SimpleCamera>().ChangeSmoothing(true);
 
@@ -186,6 +194,14 @@ public class SquishPoint : MonoBehaviour
         exiting = false;
         player.UnsuspendAll();
 
+        if (exitDirection == Direction.Up)
+        {
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+
+            player.SetJumpFlagTemporarily();
+            rb.velocity = new Vector2(rb.velocity.x, 0.0f);
+            rb.AddForce(Vector2.up * pipeBoostUpForce, ForceMode2D.Impulse);
+        }
         yield return null;
     }
 

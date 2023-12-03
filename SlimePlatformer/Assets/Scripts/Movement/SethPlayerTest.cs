@@ -84,6 +84,9 @@ public class SethPlayerTest : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// Suspends all player activity
+    /// </summary>
     public void SuspendAll()
     {
         canMove = false;
@@ -92,6 +95,9 @@ public class SethPlayerTest : MonoBehaviour
         rb.velocity = Vector2.zero;
     }
 
+    /// <summary>
+    /// Unsuspends all player activity
+    /// </summary>
     public void UnsuspendAll()
     {
         canMove = true;
@@ -108,29 +114,22 @@ public class SethPlayerTest : MonoBehaviour
 
         if (!canMove) return;
 
+        // get if the player is holding the jump key
         holdingJumpKey = Input.GetKey(KeyCode.Space);
 
         TryQueueJump();
 
         // set current gravity based on whether or the not the player wants to leave the ground
-
         if (!isGrounded || jumpFlag) {
             currentGravity = new Vector2(0.0f, 0.0f);
             rb.gravityScale = gravityMultiplier;
         }
-
         if(isGrounded && !jumpFlag)
         {
             currentGravity = -currentNormal.normalized * stickToNormalForce;
             rb.gravityScale = 0.0f;
             jumpTrail.emitting = false;
         }
-        
-
-        // set the velocity
-      
-       // else if(Mathf.Abs(currentNormal.x) > 0.01f)
-         //   vel = new(Vector2.Perpendicular(currentNormal).x * yInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * yInput * moveSpeed);
     }
 
     private void TryQueueJump()
@@ -158,18 +157,16 @@ public class SethPlayerTest : MonoBehaviour
     {
         if (!canMove) return;
 
+        // Set the velocity before collision so other scripts can access it before OnCollisionStay overrides it
         lastVelocityBeforeCollision = rb.velocity;
 
+        // Add the gravity from the normal on ground to the velocity
         vel += currentGravity;
 
-        if (wantsToLeaveGround) {
-            Jump();
-            //rb.velocity = new Vector2(currentNormal.x * jumpForce, currentNormal.y * jumpForce);
-        }
-        else if(!jumpFlag && isGrounded)
-        {
-            rb.velocity = vel;
-        }
+        // If the player wants to jump, jump
+        if (wantsToLeaveGround) Jump();
+        // If the player is grounded and the jump flag isnt on 
+        else if(!jumpFlag && isGrounded) rb.velocity = vel;
 
         // allow key press while jumping
         if(Time.time < jumpTimeStamp + jumpTime && holdingJumpKey && !isGrounded) {
@@ -178,22 +175,24 @@ public class SethPlayerTest : MonoBehaviour
             }
         }
 
-        // air control
+        // some slight air control while in air. This is very bad. It's constantly adding force so itll continoually speed up
         if (!isGrounded)
         {
             rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
         }
     }
 
+    //
     private void ResetJumpFlag() => jumpFlag = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        // This is in on collision enter just so it doesnt call the same function multiple times
         if (((1 << collision.gameObject.layer) & groundLayer) == 0)
         {
             if (((1 << collision.gameObject.layer) & nonstickLayer) != 0)
             {
+                // start the hit magma coroutine
                 jumpTrail.enabled = false;
                 StartCoroutine(HitMagma());
             }
@@ -204,10 +203,12 @@ public class SethPlayerTest : MonoBehaviour
 
     IEnumerator HitMagma()
     {
+        // Play the magma clip
         sfxSource.PlayOneShot(hitMagmaClip);
 
         yield return new WaitForSeconds(0.08f);
 
+        // slow the time down and shake the screen
         GameManager.instance.SetTimeScale(0f, 0.01f);
         CameraShake.instance.Shake(0.4f, 0.4f);
 
@@ -225,6 +226,7 @@ public class SethPlayerTest : MonoBehaviour
         if (((1 << collision.gameObject.layer) & groundLayer) == 0) {
             if(((1 << collision.gameObject.layer) & nonstickLayer) != 0)
             {
+                // if the player hit the magma, play the particles
                 magmaParticles.Play();
 
                 jumpFlag = true;
@@ -232,9 +234,7 @@ public class SethPlayerTest : MonoBehaviour
 
                 rb.velocity = Vector2.zero;
 
-                //if (currentNormal.y < 0.9f)
-                   // rb.AddForce(Vector2.up * magmaBoostForce.y, ForceMode2D.Impulse);
-
+                // boost the player in the direction of the normal
                 rb.AddForce(collision.contacts[0].normal * magmaBoostForce, ForceMode2D.Impulse);
             }
 
@@ -243,13 +243,12 @@ public class SethPlayerTest : MonoBehaviour
             return;
         }
 
-        if(isGrounded && !jumpFlag)
-        {
-            magmaParticles.Stop();
-        }
+        // stop the magma particles if the players grounded
+        if(isGrounded && !jumpFlag) magmaParticles.Stop();
 
         isGrounded = true;
 
+        // update the normal
         currentNormal = collision.contacts[0].normal;
 
         // change the normal to the other contact
@@ -257,60 +256,48 @@ public class SethPlayerTest : MonoBehaviour
             currentNormal = collision.contacts[1].normal;
         }
 
-        /*
-        if (currentNormal.y > 0.01f)
-        {
-            Debug.Log("On up!");
-            vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
-        }
-        else if (Mathf.Abs(currentNormal.y) < 0.01f && currentNormal.x < 0)
-        { // sides
-            Debug.Log("On right side!");
-            vel = new(Vector2.Perpendicular(currentNormal).x * -yInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -yInput * moveSpeed);
-        }
-        else if (Mathf.Abs(currentNormal.y) < 0.01f && currentNormal.x > 0)
-        {
-            Debug.Log("On left side!");
-            vel = new(Vector2.Perpendicular(currentNormal).x * yInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * yInput * moveSpeed);
-        }
-        else if (currentNormal.y < 0)
-        {
-            vel = new(Vector2.Perpendicular(currentNormal).x * xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * xInput * moveSpeed);
-            Debug.Log("On down!");
-        }*/
+        // This is all ghost code that would have done the WASD movement, but it didnt work correctly
 
+        // Set the velocity while the player is on the ground
         vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
 
         Debug.DrawRay(transform.position, currentNormal.normalized, Color.cyan);
     }
 
+    /// <summary>
+    /// Causes the player to jump
+    /// </summary>
     private void Jump()
     {
         wantsToLeaveGround = false;
 
+        // Set the jump flag
         jumpFlag = true;
         jumpTimeStamp = Time.time;
         Invoke(nameof(ResetJumpFlag), 0.06f);
 
+        // set the jump trail on
         jumpTrail.emitting = true;
 
+        // flatten the y vel
         rb.velocity = new Vector2(rb.velocity.x, 0.0f);
 
-        // as long as the player isnt on the ceiling
+        // as long as the player isnt on the ceiling, add jump force
         if (currentNormal.y != -1)
             rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
 
+        // add force in the direction of the current normal.x
         rb.AddForce(Vector2.right * currentNormal.x * sideJumpForce, ForceMode2D.Impulse);
     }
 
+    /// <summary>
+    /// Sets the jump flag temporarily. This is for enemies to call externally so they can bounce the player properly with 
+    /// </summary>
     public void SetJumpFlagTemporarily()
     {
         jumpFlag = true;
         Invoke(nameof(ResetJumpFlag), 0.06f);
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        isGrounded = false;
-    }
+    private void OnCollisionExit2D(Collision2D collision) => isGrounded = false;
 }

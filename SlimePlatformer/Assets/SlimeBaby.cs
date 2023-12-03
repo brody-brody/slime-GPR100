@@ -27,6 +27,7 @@ public class SlimeBaby : MonoBehaviour
 
     private void Start()
     {
+        // Randomize speed
         speed = speed + Random.Range(-speedVariation, speedVariation);
     }
 
@@ -38,51 +39,27 @@ public class SlimeBaby : MonoBehaviour
         {
             Ray ray = new Ray(new Vector2(transform.position.x, transform.position.y + 0.53f), Vector2.right * dir);
 
-            if (Physics2D.Raycast(ray.origin, ray.direction * 0.55f, 0.55f, groundLayer))
-            {
-                dir = -dir;
-            }
+            // check for wall or no ground
+            if (Physics2D.Raycast(ray.origin, ray.direction * 0.55f, 0.55f, groundLayer)) dir = -dir;
             // no ground??
-            if (!Physics2D.Raycast(ray.origin + (ray.direction * 0.5f), Vector2.down * 1.5f, 1.5f, groundLayer))
-            {
-                dir = -dir;
-            }
+            if (!Physics2D.Raycast(ray.origin + (ray.direction * 0.5f), Vector2.down * 1.5f, 1.5f, groundLayer)) dir = -dir;
         }
 
-
+        // flip the sprite x based on the direction of the enemy
         if (dir == -1) sprite.flipX = false;
         else sprite.flipX = true;
 
+        // if the enemy is grounded, set velocity directly. this is to not conflict with the forces while in the air
         if(isGrounded) rb.velocity = new Vector2(dir * speed, rb.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        /**
-         * 
-         *             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
-
-            if (player.transform.position.y > transform.position.y + 0.45)
-            {
-                // bounce player
-                rb.velocity = new Vector2(rb.velocity.x, 0.0f);
-                rb.AddForce(Vector2.up * playerBoostUpForce, ForceMode2D.Impulse);
-
-                Hit();
-            }
-            else
-            {
-                player.SetJumpFlagTemporarily();
-                rb.velocity = new Vector2(0.0f, 0.0f);
-                
-                rb.AddForce(new Vector2(Mathf.Sign(player.transform.position.x - transform.position.x) * playerHurtForce.x, playerHurtForce.y), ForceMode2D.Impulse);
-
-                Debug.Log(Mathf.Sign(player.transform.position.x - transform.position.x));*/
         if (collision.gameObject.TryGetComponent<SethPlayerTest>(out SethPlayerTest player))
         {
             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
 
+            // If the player stomped on the enemy
             if (player.transform.position.y > transform.position.y + 0.45f)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0.0f);
@@ -90,10 +67,13 @@ public class SlimeBaby : MonoBehaviour
 
                 DeathAnim();
             }
+
+            // If the player didnt stomp on the enemy, take damage
             else
             {
                 player.GetComponent<Health>().TakeDamage(1);
 
+                // boost player back
                 player.SetJumpFlagTemporarily();
                 rb.velocity = new Vector2(0.0f, 0.0f);
 
@@ -109,6 +89,7 @@ public class SlimeBaby : MonoBehaviour
         rb.velocity = Vector2.zero;
         isDead = true;
 
+        // this makes the snail fall
         rb.freezeRotation = false;
         rb.angularVelocity = Random.Range(150, 200) * dir;
         rb.AddForce(Vector2.up * 12.0f, ForceMode2D.Impulse);
@@ -117,6 +98,7 @@ public class SlimeBaby : MonoBehaviour
         source.clip = deathClip;
         source.Play();
 
+        // destroy the slime, assume its fallen out of frame
         Destroy(gameObject, 1.5f);
     }
 
@@ -127,13 +109,8 @@ public class SlimeBaby : MonoBehaviour
         dir = (int)Mathf.Sign(r) * dir;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        isGrounded = true;
-    }
+    // Set grounded 
+    private void OnCollisionStay2D(Collision2D collision) => isGrounded = true;
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        isGrounded = false;
-    }
+    private void OnCollisionExit2D(Collision2D collision) => isGrounded = false;
 }

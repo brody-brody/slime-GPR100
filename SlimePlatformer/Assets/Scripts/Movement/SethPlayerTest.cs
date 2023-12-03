@@ -80,6 +80,7 @@ public class SethPlayerTest : MonoBehaviour
     #endregion
 
     private float jumpBufferTimer;
+    private float lastInput;
 
     private void Awake()
     {
@@ -125,6 +126,7 @@ public class SethPlayerTest : MonoBehaviour
         if (!isGrounded || jumpFlag) {
             currentGravity = new Vector2(0.0f, 0.0f);
             rb.gravityScale = gravityMultiplier;
+            lastInput = xInput;
         }
         if(isGrounded && !jumpFlag)
         {
@@ -180,8 +182,13 @@ public class SethPlayerTest : MonoBehaviour
         // some slight air control while in air. This is very bad. It's constantly adding force so itll continoually speed up
         if (!isGrounded)
         {
-            if (rb.velocity.magnitude > maxAirVelocity)
-            rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
+            if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(xInput) || Mathf.Abs(rb.velocity.x) < 0.1f)
+            {
+                Debug.Log("Aircontrol baby T-T UWU WUUWUW OWO ");
+                if (rb.velocity.magnitude > maxAirVelocity)
+                    rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
+            }
+            
         }
     }
 
@@ -196,7 +203,6 @@ public class SethPlayerTest : MonoBehaviour
             if (((1 << collision.gameObject.layer) & nonstickLayer) != 0)
             {
                 // start the hit magma coroutine
-                jumpTrail.enabled = false;
                 StartCoroutine(HitMagma());
             }
             else

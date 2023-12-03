@@ -191,8 +191,8 @@ MonoBehaviour:
     m_Bits: 128
   gravityMultiplier: 5.5
   stickToNormalForce: 15
-  airControl: 15
-  maxAirVelocity: 5
+  airControl: 250
+  maxAirVelocity: 15
   sideJumpForce: 5
   jumpUpForce: 10
   additionalJumpForce: 37

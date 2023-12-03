@@ -7,6 +7,7 @@ public class Salamander : MonoBehaviour
     [Header("Salamander Movement Settings")]
     [SerializeField] private float gravityMultiplier = 9.806f;
     [SerializeField] private float stickToNormalForce = 15.0f;
+    [SerializeField] private float rotationSpeed = 100;
 
     private Transform player; 
 
@@ -32,7 +33,7 @@ public class Salamander : MonoBehaviour
     void Update()
     {
         //Rotates Enemy
-        gameObject.transform.Rotate(0, 0, 10 / 10);
+        gameObject.transform.Rotate(0, 0, rotationSpeed / 10);
 
         //Set enemies gravity
         currentGravity = -currentNormal.normalized * stickToNormalForce;

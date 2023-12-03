@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7899399306576709402}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Position Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1245090851185722956}
   - component: {fileID: 92133180325977162}
   - component: {fileID: 552431315745334789}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 8643000146060926841}
   - component: {fileID: 2166069900442752510}
   - component: {fileID: 1683329064235834870}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Snail Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5088310719911035002}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Right Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +566,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2639241768190593028}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Left Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -598,7 +598,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3308144079327940983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Snail Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 860675108212663719}
   - component: {fileID: 3978265768361214658}
   - component: {fileID: 9180663407532782253}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -821,7 +821,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7336923697969395162}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Eye Position Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

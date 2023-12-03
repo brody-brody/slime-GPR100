@@ -19,6 +19,8 @@ public class SethPlayerTest : MonoBehaviour
     private float stickToNormalForce = 15.0f;
     [SerializeField]
     private float airControl = 3.0f;
+    [SerializeField]
+    private float maxAirVelocity = 5.0f;
 
     [Header("Jump")]
     [SerializeField]
@@ -178,6 +180,7 @@ public class SethPlayerTest : MonoBehaviour
         // some slight air control while in air. This is very bad. It's constantly adding force so itll continoually speed up
         if (!isGrounded)
         {
+            if (rb.velocity.magnitude > maxAirVelocity)
             rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
         }
     }

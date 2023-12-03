@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 7548742664116504581}
   - component: {fileID: 3459170534949358646}
   - component: {fileID: -1949648386507162782}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SlimePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,8 @@ MonoBehaviour:
     m_Bits: 128
   gravityMultiplier: 5.5
   stickToNormalForce: 15
-  airControl: 5
+  airControl: 15
+  maxAirVelocity: 5
   sideJumpForce: 5
   jumpUpForce: 10
   additionalJumpForce: 37
@@ -10218,7 +10219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3242995358645747890}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

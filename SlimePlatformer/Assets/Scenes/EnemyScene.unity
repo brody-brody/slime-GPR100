@@ -7897,29 +7897,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -1949648386507162782, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1418548612}
-    - target: {fileID: -1949648386507162782, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-      propertyPath: sprite
-      value: 
-      objectReference: {fileID: 1114178207}
-    - target: {fileID: -1949648386507162782, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-      propertyPath: invFrames
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 774606685574183679, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_Name
       value: SlimePlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 774606685574183679, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 859910111690908852, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7961,25 +7941,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6139054224810555337, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9219665352925263262, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-      propertyPath: deathScreen
-      value: 
-      objectReference: {fileID: 422667072}
-    m_RemovedComponents:
-    - {fileID: 859910111690908852, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
---- !u!212 &1114178207 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 851340390113898137, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-  m_PrefabInstance: {fileID: 994805017}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1353071209
 GameObject:
   m_ObjectHideFlags: 0
@@ -8027,11 +7993,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 162399238}
   smoothTime: {x: 0.25, y: 0.1}
---- !u!1 &1418548612 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 774606685574183679, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
-  m_PrefabInstance: {fileID: 994805017}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1696965464
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,7 +49,7 @@ MonoBehaviour:
   moveSpeed: 30
   exitDirection: -1
   source: {fileID: 3480277359793907163}
-  enterSound: {fileID: 8300000, guid: 859633a347bc6441faf224681ce405c9, type: 3}
+  enterSound: {fileID: 8300000, guid: ff05ae6651d6f479792188228738a5f2, type: 3}
   reachPointSound: {fileID: 8300000, guid: d3972efd626064116ba871a0eab31a4c, type: 3}
   exitSound: {fileID: 8300000, guid: e2d16cc93c16749e1a942564c244842e, type: 3}
   railSound: {fileID: 8300000, guid: 5c77908325c674e4897868818404d0ae, type: 3}

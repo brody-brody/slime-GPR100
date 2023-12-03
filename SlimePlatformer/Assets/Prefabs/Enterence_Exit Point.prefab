@@ -52,7 +52,7 @@ MonoBehaviour:
   enterSound: {fileID: 8300000, guid: 859633a347bc6441faf224681ce405c9, type: 3}
   reachPointSound: {fileID: 8300000, guid: d3972efd626064116ba871a0eab31a4c, type: 3}
   exitSound: {fileID: 8300000, guid: e2d16cc93c16749e1a942564c244842e, type: 3}
-  railSound: {fileID: 8300000, guid: 5c77908325c674e4897868818404d0ae, type: 3}
+  railSound: {fileID: 8300000, guid: 6d290905ac259400082aa674663cb39e, type: 3}
   squishPoints: []
   readyToMove: 0
 --- !u!82 &39390952826929281

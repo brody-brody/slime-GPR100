@@ -35,39 +35,35 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        if (movement.HorizontalInput > 0)
-        {
-            renderer.sprite = spriteRight;
-        }
-        else if (movement.HorizontalInput < 0)
-        {
-            renderer.sprite = spriteLeft;
-        }
+        // Set the sprite to the left / right sprite based on input
+        if (movement.HorizontalInput > 0) renderer.sprite = spriteRight; 
+        else if (movement.HorizontalInput < 0) renderer.sprite = spriteLeft;
 
-        if (movement.IsMoving)  {
-            myAnimator.SetBool("Walking", true);    
-        }
-        else {
-            myAnimator.SetBool("Walking", false);
-        }
+        // Set walking based on if the player is moving
+        if (movement.IsMoving)  myAnimator.SetBool("Walking", true);    
+        else myAnimator.SetBool("Walking", false);
 
+        // Jump animation trigger
         if (movement.PlayerJumpFlag && !jumping)
         {
             myAnimator.SetTrigger("Jump");
+            // This is just a flag that ensures it doesnt trigger multiple
             jumping = true;
-
         }
 
+        // cancel jump flag
         if (!movement.PlayerJumpFlag)
         {
             jumping = false;
         }
 
+        // While the player isnt on the ground, assume falling
         if (!movement.IsGrounded)
         {
             awaitingFall = true;
         }
 
+        // if falling, trigger the land animation
         if (movement.IsGrounded && awaitingFall)
         {
             myAnimator.SetTrigger("Land");
@@ -76,15 +72,23 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Updates the player rotation to align with the current surface
+    /// </summary>
     private void UpdateRotation()
     {
+        // Hey guys. I don't remember how the fuck this shit works. Thanks :D
+
         float angle = Vector3.Angle(transform.up, movement.CurrentNormal);
+
+        // make angle negative if normal is left wall
         if (movement.CurrentNormal.x > 0) angle = -angle;
 
         Quaternion fromQuat = targetRotation.transform.localRotation;
         Quaternion toQuat = movement.IsGrounded ? Quaternion.AngleAxis(angle, Vector3.forward) : Quaternion.Euler(0, 0, 0);
         float smoothingFactor = movement.IsGrounded ? upSmoothingOnGround : upSmoothingInAir;
 
+        // Smooth the rotation
         targetRotation.transform.localRotation = Quaternion.Lerp(fromQuat, toQuat, Time.deltaTime * smoothingFactor);
     }
 }

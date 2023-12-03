@@ -42,7 +42,7 @@ public class ResetLevel : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(2f);
         GameManager.instance.SetTimeScale(1f, 0.01f);
-        yield return new WaitForSecondsRealtime(0.01f);
+        yield return new WaitForSecondsRealtime(0.2f);
         SceneManager.LoadScene("Scenes/Levels/" + SceneManager.GetActiveScene().name); 
         
     }

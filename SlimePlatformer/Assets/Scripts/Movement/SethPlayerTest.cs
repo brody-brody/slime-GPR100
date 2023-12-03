@@ -36,6 +36,13 @@ public class SethPlayerTest : MonoBehaviour
     [SerializeField] private ParticleSystem magmaParticles;
     [SerializeField] private TrailRenderer jumpTrail;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip landClip;
+    [SerializeField] private AudioClip hitMagmaClip;
+    [SerializeField] private AudioClip soarMagmaClip;
+
     [SerializeField] private Collider2D collider;
 
     private Vector2 currentNormal = Vector2.up;
@@ -95,11 +102,11 @@ public class SethPlayerTest : MonoBehaviour
 
     void Update()
     {
-        if (!canMove) return;
-
         // store horizontal input into the xInput variable
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
+
+        if (!canMove) return;
 
         holdingJumpKey = Input.GetKey(KeyCode.Space);
 
@@ -141,6 +148,7 @@ public class SethPlayerTest : MonoBehaviour
 
         if (jumpBufferTimer > 0 && isGrounded)
         {
+            sfxSource.PlayOneShot(jumpClip);
             wantsToLeaveGround = true;
             jumpBufferTimer = 0;
         }
@@ -155,21 +163,7 @@ public class SethPlayerTest : MonoBehaviour
         vel += currentGravity;
 
         if (wantsToLeaveGround) {
-            wantsToLeaveGround = false;
-
-            jumpFlag = true;
-            jumpTimeStamp = Time.time;
-            Invoke(nameof(ResetJumpFlag), 0.06f);
-
-            jumpTrail.emitting = true;
-
-            rb.velocity = new Vector2(rb.velocity.x, 0.0f);
-
-            // as long as the player isnt on the ceiling
-            if(currentNormal.y != -1)
-                rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
-
-            rb.AddForce(Vector2.right * currentNormal.x * sideJumpForce, ForceMode2D.Impulse);
+            Jump();
             //rb.velocity = new Vector2(currentNormal.x * jumpForce, currentNormal.y * jumpForce);
         }
         else if(!jumpFlag && isGrounded)
@@ -193,6 +187,37 @@ public class SethPlayerTest : MonoBehaviour
 
     private void ResetJumpFlag() => jumpFlag = false;
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & groundLayer) == 0)
+        {
+            if (((1 << collision.gameObject.layer) & nonstickLayer) != 0)
+            {
+                StartCoroutine(HitMagma());
+            }
+            return;
+        }
+
+        //sfxSource.PlayOneShot(landClip);
+    }
+
+    IEnumerator HitMagma()
+    {
+        sfxSource.PlayOneShot(hitMagmaClip);
+
+        yield return new WaitForSeconds(0.08f);
+
+        GameManager.instance.SetTimeScale(0f, 0.01f);
+        CameraShake.instance.Shake(0.4f, 0.4f);
+
+        yield return new WaitForSecondsRealtime(0.1f);
+        sfxSource.PlayOneShot(soarMagmaClip);
+        yield return new WaitForSecondsRealtime(0.08f);
+        GameManager.instance.SetTimeScale(1f, 0.01f);
+
+        yield return null;
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         // ensure the player hit the ground mask
@@ -200,12 +225,9 @@ public class SethPlayerTest : MonoBehaviour
             if(((1 << collision.gameObject.layer) & nonstickLayer) != 0)
             {
                 magmaParticles.Play();
-                CameraShake.instance.Shake(0.3f, 0.4f);
 
                 jumpFlag = true;
                 Invoke(nameof(ResetJumpFlag), 0.06f);
-
-                Debug.Log("Hit non stick!");
 
                 rb.velocity = Vector2.zero;
 
@@ -259,6 +281,25 @@ public class SethPlayerTest : MonoBehaviour
         vel = new(Vector2.Perpendicular(currentNormal).x * -xInput * moveSpeed, Vector2.Perpendicular(currentNormal).y * -xInput * moveSpeed);
 
         Debug.DrawRay(transform.position, currentNormal.normalized, Color.cyan);
+    }
+
+    private void Jump()
+    {
+        wantsToLeaveGround = false;
+
+        jumpFlag = true;
+        jumpTimeStamp = Time.time;
+        Invoke(nameof(ResetJumpFlag), 0.06f);
+
+        jumpTrail.emitting = true;
+
+        rb.velocity = new Vector2(rb.velocity.x, 0.0f);
+
+        // as long as the player isnt on the ceiling
+        if (currentNormal.y != -1)
+            rb.AddForce(Vector2.up * jumpUpForce, ForceMode2D.Impulse);
+
+        rb.AddForce(Vector2.right * currentNormal.x * sideJumpForce, ForceMode2D.Impulse);
     }
 
     private void OnCollisionExit2D(Collision2D collision)

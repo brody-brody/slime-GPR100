@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerAnimationHandler : MonoBehaviour
 {
+    [SerializeField] private Transform targetRotation; 
     [SerializeField] private Animator myAnimator;
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private float upSmoothingInAir = 2.2f;
@@ -34,13 +35,17 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     private void UpdateAnimation()
     {
+        if (movement.HorizontalInput > 0)
+        {
+            renderer.sprite = spriteRight;
+        }
+        else if (movement.HorizontalInput < 0)
+        {
+            renderer.sprite = spriteLeft;
+        }
+
         if (movement.IsMoving)  {
-            myAnimator.SetBool("Walking", true);
-            if(movement.HorizontalInput > 0) {
-                renderer.sprite = spriteRight;
-            } else if(movement.HorizontalInput < 0) {
-                renderer.sprite = spriteLeft;
-            }
+            myAnimator.SetBool("Walking", true);    
         }
         else {
             myAnimator.SetBool("Walking", false);
@@ -76,10 +81,10 @@ public class PlayerAnimationHandler : MonoBehaviour
         float angle = Vector3.Angle(transform.up, movement.CurrentNormal);
         if (movement.CurrentNormal.x > 0) angle = -angle;
 
-        Quaternion fromQuat = renderer.transform.localRotation;
-        Quaternion toQuat = movement.IsGrounded ? Quaternion.AngleAxis(angle, Vector3.forward) : Quaternion.Euler(0,0,0);
+        Quaternion fromQuat = targetRotation.transform.localRotation;
+        Quaternion toQuat = movement.IsGrounded ? Quaternion.AngleAxis(angle, Vector3.forward) : Quaternion.Euler(0, 0, 0);
         float smoothingFactor = movement.IsGrounded ? upSmoothingOnGround : upSmoothingInAir;
 
-        renderer.transform.localRotation = Quaternion.Lerp(fromQuat, toQuat, Time.deltaTime * smoothingFactor);
+        targetRotation.transform.localRotation = Quaternion.Lerp(fromQuat, toQuat, Time.deltaTime * smoothingFactor);
     }
 }

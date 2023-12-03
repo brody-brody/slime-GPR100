@@ -24,6 +24,13 @@ public class SquishPoint : MonoBehaviour
     [Header("Exit Variables")]
     [SerializeField] private Direction exitDirection;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip enterSound;
+    [SerializeField] private AudioClip reachPointSound;
+    [SerializeField] private AudioClip exitSound;
+    [SerializeField] private AudioClip railSound;
+
     private SethPlayerTest player;
 
     private void Start()
@@ -133,6 +140,7 @@ public class SquishPoint : MonoBehaviour
 
     private IEnumerator Enter()
     {
+        source.PlayOneShot(enterSound);
         yield return StartCoroutine(LerpToPosition(player.transform.position, transform.position, 0.3f));
 
         FindObjectOfType<SimpleCamera>().ChangeSmoothing(false);
@@ -143,6 +151,8 @@ public class SquishPoint : MonoBehaviour
 
     private IEnumerator Exit()
     {
+        source.PlayOneShot(exitSound);
+
         readyToMove = false;
         Vector3 moveOffset = Vector3.zero;
         switch (exitDirection)
@@ -192,6 +202,10 @@ public class SquishPoint : MonoBehaviour
 
     private IEnumerator MoveToPoint(SquishPointData data)
     {
+        source.clip = railSound;
+        source.loop = true;
+        source.Play();
+
         moving = true;
 
         float distance = Vector2.Distance(player.transform.position, data.point.transform.position);
@@ -206,6 +220,11 @@ public class SquishPoint : MonoBehaviour
         readyToMove = false;
         enteredOnSelf = false;
         moving = false;
+
+        source.loop = false;
+        source.Stop();
+
+        source.PlayOneShot(reachPointSound);
 
         yield return null;
     }

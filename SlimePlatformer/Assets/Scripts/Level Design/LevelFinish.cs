@@ -40,19 +40,19 @@ public class LevelFinish : MonoBehaviour
     // wait 2 seconds, show first coin if collected with camera shake, wait a second, etc etc
     IEnumerator ShowCoins()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1f);
         if (gameManager.coins >= 1)
         {
             coin1.enabled = true;
             CameraShake.instance.Shake(0.2f, 0.2f);
         }
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.5f);
         if (gameManager.coins >= 2)
         {
             coin2.enabled = true;
             CameraShake.instance.Shake(0.2f, 0.2f);
         }
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(0.5f);
         if (gameManager.coins >= 3)
         {
             coin3.enabled = true;

@@ -182,12 +182,12 @@ public class SethPlayerTest : MonoBehaviour
         // some slight air control while in air. This is very bad. It's constantly adding force so itll continoually speed up
         if (!isGrounded)
         {
-            if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(xInput) || Mathf.Abs(rb.velocity.x) < 0.1f)
-            {
-                Debug.Log("Aircontrol baby T-T UWU WUUWUW OWO ");
-                if (rb.velocity.magnitude > maxAirVelocity)
+            //if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(xInput) || Mathf.Abs(rb.velocity.x) < 0.1f)
+            //{
+                //Debug.Log("Aircontrol baby T-T UWU WUUWUW OWO ");
+                //if (rb.velocity.magnitude > maxAirVelocity)
                     rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
-            }
+            //}
             
         }
     }

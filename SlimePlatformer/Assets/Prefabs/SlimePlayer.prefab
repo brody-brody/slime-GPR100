@@ -191,11 +191,11 @@ MonoBehaviour:
     m_Bits: 128
   gravityMultiplier: 5.5
   stickToNormalForce: 15
-  airControl: 250
+  airControl: 3
   maxAirVelocity: 15
   sideJumpForce: 5
   jumpUpForce: 10
-  additionalJumpForce: 37
+  additionalJumpForce: 40
   jumpTime: 0.5
   jumpBufferTime: 0.1
   magmaParticles: {fileID: 6465938786198259499}

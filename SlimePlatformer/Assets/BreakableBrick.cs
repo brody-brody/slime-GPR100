@@ -14,7 +14,7 @@ public class BreakableBrick : MonoBehaviour
         if (collision.gameObject.TryGetComponent<SethPlayerTest>(out SethPlayerTest player))
         {
             // Check if the velocity is faster than the minimum velocity to break the brick, the player must also be in the air
-            if(player.LastVelocityBeforeCollision.y >= minYVelocityToBreak && !player.IsGrounded)
+            if(player.OnMagma)
             {
                 // set the velocity to what the velocity was before collision
                 player.GetComponent<Rigidbody2D>().velocity = player.LastVelocityBeforeCollision;

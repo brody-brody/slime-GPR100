@@ -53,6 +53,9 @@ public class SethPlayerTest : MonoBehaviour
     // jump variables
     private float jumpTimeStamp;
 
+    private bool onMagma = false;
+    public bool OnMagma { get { return onMagma; } }
+
     // input variables
     private float xInput;
     private float yInput;
@@ -133,6 +136,7 @@ public class SethPlayerTest : MonoBehaviour
             currentGravity = -currentNormal.normalized * stickToNormalForce;
             rb.gravityScale = 0.0f;
             jumpTrail.emitting = false;
+            onMagma = false;
         }
     }
 
@@ -242,6 +246,7 @@ public class SethPlayerTest : MonoBehaviour
                 Invoke(nameof(ResetJumpFlag), 0.06f);
 
                 rb.velocity = Vector2.zero;
+                onMagma = true;
 
                 // boost the player in the direction of the normal
                 rb.AddForce(collision.contacts[0].normal * magmaBoostForce, ForceMode2D.Impulse);

@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+
+        player = FindObjectOfType<SethPlayerTest>().transform;
     }
 
     /// <summary>

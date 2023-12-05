@@ -1743,11 +1743,31 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 12, y: 8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 19
+      m_TileSpriteIndex: 19
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 1
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 13, y: 8, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 18
+      m_TileIndex: 22
       m_TileSpriteIndex: 18
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 1
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 14, y: 8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 17
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 1
       m_TileObjectToInstantiateIndex: 65535
@@ -2599,18 +2619,18 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: e2eebdc7f98f3400dac846e23014179d, type: 2}
   - m_RefCount: 35
     m_Data: {fileID: 11400000, guid: 6df96a0df6829457494e31b3affb26c8, type: 2}
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: 36861790ead7f4c3181cfeba35ca9560, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 776d640a47e96471693c0b2f26f60179, type: 2}
-  - m_RefCount: 1
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 9d4472d759be54611a72bc22ab568a3a, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 2e7454d8fe2b947fa8ac42992efeb8a9, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: ad159c55d6abb4c6f8cb3363ea3fab26, type: 2}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: b2c162ed2fb074cd2b87542b9e275575, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: b4a2d6a8e304b48c7b1e71c7c3e20927, type: 2}
   - m_RefCount: 1
@@ -2650,11 +2670,11 @@ Tilemap:
     m_Data: {fileID: -1741617543, guid: 2a64e4db8275b485fa7df0b9eb1ed10c, type: 3}
   - m_RefCount: 35
     m_Data: {fileID: 1113549184, guid: 2a64e4db8275b485fa7df0b9eb1ed10c, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 3
     m_Data: {fileID: -1847229120, guid: 2a64e4db8275b485fa7df0b9eb1ed10c, type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: -1410628480, guid: 2a64e4db8275b485fa7df0b9eb1ed10c, type: 3}
-  - m_RefCount: 1
+    m_Data: {fileID: 1901185581, guid: 2a64e4db8275b485fa7df0b9eb1ed10c, type: 3}
+  - m_RefCount: 2
     m_Data: {fileID: 1838355450, guid: 2a64e4db8275b485fa7df0b9eb1ed10c, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -318574796, guid: ba0c382b30119434089ee7ecdb338bdc, type: 3}
@@ -2667,7 +2687,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: -1220934929, guid: ba0c382b30119434089ee7ecdb338bdc, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 176
+  - m_RefCount: 178
     m_Data:
       e00: 1
       e01: 0
@@ -2742,7 +2762,7 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 3.6442e-41, g: 3.6442e-41, b: 3.6442e-41, a: 3.6442e-41}
-  - m_RefCount: 212
+  - m_RefCount: 214
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -2999,13 +3019,13 @@ CompositeCollider2D:
         Y: 90000000
       - X: 220000000
         Y: 80000000
-    - - X: 140000000
+    - - X: 150000000
         Y: 90000000
-      - X: 130000000
+      - X: 120000000
         Y: 90000000
-      - X: 130000000
+      - X: 120000000
         Y: 80000000
-      - X: 140000000
+      - X: 150000000
         Y: 80000000
     - - X: -60000000
         Y: 90000000
@@ -3461,10 +3481,10 @@ CompositeCollider2D:
       - {x: 21, y: 8.00003}
       - {x: 21.000029, y: 9}
       - {x: 22, y: 8.99997}
-    - - {x: 13.999971, y: 8}
-      - {x: 13.999971, y: 9}
-      - {x: 13, y: 8.99997}
-      - {x: 13.00003, y: 8}
+    - - {x: 14.999971, y: 8}
+      - {x: 14.999971, y: 9}
+      - {x: 12, y: 8.99997}
+      - {x: 12.00003, y: 8}
     - - {x: -6.000029, y: 8}
       - {x: -6.000029, y: 9}
       - {x: -7, y: 8.99997}

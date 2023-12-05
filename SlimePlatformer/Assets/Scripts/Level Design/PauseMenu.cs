@@ -5,11 +5,14 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
 
+    public GameObject player;
     public GameObject pauseMenu;
     public static bool paused;
+    private SethPlayerTest playerMovement;
 
     void Start()
     {
+        playerMovement = player.GetComponent<SethPlayerTest>();
         paused = false;
     }
 
@@ -19,10 +22,12 @@ public class PauseMenu : MonoBehaviour
         if (!paused)
         {
             pauseMenu.SetActive(true);
+            playerMovement.GetComponent<SethPlayerTest>().SuspendAll();
         }
         if (paused)
         {
             pauseMenu.SetActive(false);
+            playerMovement.GetComponent<SethPlayerTest>().UnsuspendAll();
         }
         paused = !paused;
     }

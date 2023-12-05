@@ -14,7 +14,7 @@ public class StageLoad : MonoBehaviour
     void Start()
     {
        playerLevelLoader = player.GetComponent<PlayerLevelLoader>();
-       _system = system.GetComponent<system>();
+       _system = FindObjectOfType<system>();
     }
 
     // Update is called once per frame

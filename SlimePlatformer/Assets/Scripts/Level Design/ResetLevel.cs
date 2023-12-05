@@ -9,17 +9,23 @@ public class ResetLevel : MonoBehaviour
 {
     public GameObject player;
     private SimpleCamera camera;
+    private system _system;
 
     // find the camera object
     void Start()
     {
         camera = FindObjectOfType<SimpleCamera>();
+        _system = FindObjectOfType<system>();
     }
     // constantly testing if the player hits the r key, and runs Restart() if they do
     void Update()
     {
         if (Input.GetKey(KeyCode.R)) {
             Restart();
+        }
+        if (Input.GetKey(KeyCode.Escape)) {
+            _system.GetComponent<system>().ClearVariable();
+            SceneManager.LoadScene("MenuScene");
         }
     }
  

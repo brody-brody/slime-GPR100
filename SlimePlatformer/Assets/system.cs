@@ -1,18 +1,25 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class system : MonoBehaviour
 {
     // Example variable to transfer
     public int level = 0;
     public GameObject player;
+    public GameObject loadingScreen;
     public float spawnX;
     public float spawnY;
+    private system _system;
     private void Start()
     {
+        _system = FindObjectOfType<system>();
        if(SceneManager.GetActiveScene().name == "LevelSelect")
         {
+            loadingScreen.SetActive(true);
             LoadVariable();
             switch (level)
             {
@@ -97,6 +104,7 @@ public class system : MonoBehaviour
                     player.transform.position = new Vector3(spawnX, spawnY, 0);
                     break;
             }
+            StartCoroutine(LoadBuffer());
             Debug.Log("Set Player SpawnPoint");
         }
     }
@@ -144,5 +152,11 @@ public class system : MonoBehaviour
     {
         SaveVariable(); // Save the variable before loading the next level
         SceneManager.LoadScene(level);
+    }
+
+    IEnumerator LoadBuffer()
+    {
+        yield return new WaitForSeconds(0.7f);
+        loadingScreen.SetActive(false);
     }
 }

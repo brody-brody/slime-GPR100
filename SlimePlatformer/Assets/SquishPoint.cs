@@ -17,6 +17,7 @@ public class SquishPoint : MonoBehaviour
 
     // if not currently on point, 
     [SerializeField] private EnterenceType enterenceType;
+    public EnterenceType MyEnterenceType { get { return enterenceType; } }
 
     [Header("Modifiers")]
     [SerializeField] private float moveSpeed = 0.6f;
@@ -68,14 +69,20 @@ public class SquishPoint : MonoBehaviour
         // 1) Try to enter is an enterence
         TryEnter();
 
-        // make move if ready
-        MakeMove();
-
         if (!enteredOnSelf && readyToMove && (enterenceType == EnterenceType.IsBoth || enterenceType == EnterenceType.IsExitOnly) && !exiting && isPlayerEntered)
         {
             exiting = true;
             StartCoroutine(Exit());
         }
+        else if(enteredOnSelf && readyToMove && (enterenceType == EnterenceType.IsBoth || enterenceType == EnterenceType.IsExitOnly) && !exiting && isPlayerEntered && (int)GetInputDirection() == (int)exitDirection)
+        {
+            exiting = true;
+            StartCoroutine(Exit());
+        }
+
+
+        // make move if ready
+        MakeMove();
     }
 
     private void TryEnter()
@@ -139,6 +146,7 @@ public class SquishPoint : MonoBehaviour
             source.loop = true;
             source.Play();
 
+            readyToMove = false;
             StartCoroutine(MoveToPoint(targetPoint));
         }
     }
@@ -158,6 +166,7 @@ public class SquishPoint : MonoBehaviour
     {
         source.PlayOneShot(exitSound);
 
+        moving = true;
         readyToMove = false;
         Vector3 moveOffset = Vector3.zero;
         switch (exitDirection)
@@ -192,6 +201,7 @@ public class SquishPoint : MonoBehaviour
         isPlayerEntered = false;
         readyToMove = false;
         exiting = false;
+        moving = false;
         player.UnsuspendAll();
 
         if (exitDirection == Direction.Up)

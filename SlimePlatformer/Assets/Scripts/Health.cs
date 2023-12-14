@@ -42,7 +42,7 @@ public class Health : MonoBehaviour
         //Death
         if (health <= 0)
         {
-            
+            resetLevel.Death();
         }
     }
     /// <summary>

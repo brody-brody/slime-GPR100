@@ -38,7 +38,7 @@ public class Salamander : MonoBehaviour
         if (Vector2.Distance(transform.position, player.position) < 0.5f)
         {
             //Damages player for 3 health
-            Health.takeDamage(3);
+            Health.takeDamage(1);
         }
     }
     private void FixedUpdate()

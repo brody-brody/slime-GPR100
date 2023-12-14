@@ -21,6 +21,8 @@ public class CollectibleTrigger : MonoBehaviour
 	// on collision with coin, set opacity of UI coin to 100%, and get rid of the coin on the map
 	private void OnTriggerEnter2D(Collider2D other) 
 	{
+		if (other.gameObject.layer != 3)
+			return;
 		// remove coin from scene, and then change the color of one of the canvas images
 		// to properly represent number of coins collected.
 		if (gameManager.coins == 0)

@@ -136898,6 +136898,7 @@ GameObject:
   - component: {fileID: 2027732496}
   - component: {fileID: 2027732495}
   - component: {fileID: 2027732494}
+  - component: {fileID: 2027732497}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -136917,7 +136918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b168c31f87ed44e9d47e3acb041218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numCoins: {fileID: 1524004457}
   player: {fileID: 0}
   coins: 0
 --- !u!114 &2027732495
@@ -136948,6 +136948,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2027732497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027732493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e5abbfc6e855a41bddfd738702bacd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numCoins: {fileID: 1524004457}
 --- !u!1 &2101758705
 GameObject:
   m_ObjectHideFlags: 0

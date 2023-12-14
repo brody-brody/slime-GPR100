@@ -164,6 +164,6 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 64
-  speed: 500
+  speed: 400
   lifetime: 4
   target: {x: 0, y: 0, z: 0}

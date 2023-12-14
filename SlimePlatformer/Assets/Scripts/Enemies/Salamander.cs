@@ -7,7 +7,6 @@ public class Salamander : MonoBehaviour
     [Header("Salamander Movement Settings")]
     [SerializeField] private float gravityMultiplier = 9.806f;
     [SerializeField] private float stickToNormalForce = 15.0f;
-    [SerializeField] private float rotationSpeed = 100;
 
     private Transform player; 
 
@@ -32,9 +31,6 @@ public class Salamander : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Rotates Enemy
-        gameObject.transform.Rotate(0, 0, rotationSpeed / 10);
-
         //Set enemies gravity
         currentGravity = -currentNormal.normalized * stickToNormalForce;
 
@@ -47,21 +43,29 @@ public class Salamander : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //Add normalized gravity to current velocity
-        currentVelocity += currentGravity;
+        rb.AddForce(currentGravity, ForceMode2D.Force);
 
         rb.velocity = currentVelocity;
+
+        if (rb.velocity.magnitude > speed)
+        {
+            rb.velocity = Vector2.ClampMagnitude(currentVelocity, speed);
+        }
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
         //Find normal from current surface, takes only one normal at a time
+        currentNormal = collision.contacts[0].normal;
+
         if (collision.contactCount > 1)
         {
             currentNormal = collision.contacts[1].normal;
         }
+
         currentVelocity = new(Vector2.Perpendicular(currentNormal).x * speed, speed * Vector2.Perpendicular(currentNormal).y);
 
         //Debug
-        //Debug.DrawRay(transform.position, currentNormal * 2, Color.gray);
+        Debug.DrawRay(transform.position, currentNormal * 2, Color.green);
+        Debug.DrawRay(transform.position, currentVelocity * 2, Color.blue);
     }
 }

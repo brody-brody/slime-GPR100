@@ -13,6 +13,7 @@ public class LevelFinish : MonoBehaviour
     private SethPlayerTest playerMovement;
 
     private bool playerTouchedMe;
+    private bool levelExists;
 
 
     // on start, grab player movement script, set the players coins to 0, and set the finish flag to false
@@ -27,14 +28,33 @@ public class LevelFinish : MonoBehaviour
     // on collision with the end flag, disable movement, enable finish menu, suspend velocity, and start coroutine ShowCoins
     private void OnTriggerEnter2D(Collider2D other) 
 	{
-        if(playerTouchedMe) return;
-
-        if (other.transform != player.transform) return;
+        if(playerTouchedMe) 
+            return;
+        // derp
+        if (other.transform != player.transform) 
+            return;
         playerTouchedMe = true;
         playerMovement.enabled = false;
         finishMenu.SetActive(true);
         playerMovement.GetComponent<SethPlayerTest>().SuspendAll();
         StartCoroutine(ShowCoins());
+
+        LevelData.LevelStorage levelComplete = new LevelData.LevelStorage(SceneManager.GetActiveScene().name, gameManager.coins);
+        
+        Debug.Log(SceneManager.GetActiveScene().name + " saved with " + gameManager.coins + " coins");
+        
+        levelExists = false;
+        foreach (var LevelData in LevelData.levelInfo)
+        {
+            if (LevelData.levelName == SceneManager.GetActiveScene().name)
+            {
+                if (gameManager.coins > LevelData.coins)
+                    LevelData.coins = gameManager.coins;
+                    levelExists = true;
+            }
+        }
+        if (!levelExists)
+            LevelData.levelInfo.Add(levelComplete);
     }
 
     // wait 2 seconds, show first coin if collected with camera shake, wait a second, etc etc

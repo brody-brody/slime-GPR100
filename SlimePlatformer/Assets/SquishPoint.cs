@@ -156,7 +156,7 @@ public class SquishPoint : MonoBehaviour
         source.PlayOneShot(enterSound);
         yield return StartCoroutine(LerpToPosition(player.transform.position, transform.position, 0.3f));
 
-        FindObjectOfType<SimpleCamera>().ChangeSmoothing(false);
+        //FindObjectOfType<SimpleCamera>().ChangeSmoothing(false);
         readyToMove = true;
 
         yield return null;

@@ -37,11 +37,12 @@ public class SlimeBaby : MonoBehaviour
 
         if (isGrounded)
         {
-            Ray ray = new Ray(new Vector2(transform.position.x, transform.position.y + 0.53f), Vector2.right * dir);
+            Ray ray = new Ray(new Vector2(transform.position.x, transform.position.y), Vector2.right * dir);
 
             // check for wall or no ground
             if (Physics2D.Raycast(ray.origin, ray.direction * 0.55f, 0.55f, groundLayer)) dir = -dir;
             // no ground??
+            ray.origin = new Vector2(transform.position.x, transform.position.y + 0.53f);
             if (!Physics2D.Raycast(ray.origin + (ray.direction * 0.5f), Vector2.down * 1.5f, 1.5f, groundLayer)) dir = -dir;
         }
 

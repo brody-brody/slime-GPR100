@@ -33,6 +33,7 @@ public class ResetLevel : MonoBehaviour
     void Restart()
     {
         SceneManager.LoadScene("Scenes/Levels/" + SceneManager.GetActiveScene().name); 
+        GameManager.instance.SetTimeScale(1f, 0.5f);
     }
 
     // when function is ran, time is slowed to 1/10 speed, the camera is locked in place, and the fallDeath coroutine is ran
@@ -50,6 +51,8 @@ public class ResetLevel : MonoBehaviour
         GameManager.instance.SetTimeScale(1f, 0.01f);
         yield return new WaitForSecondsRealtime(0.2f);
         SceneManager.LoadScene("Scenes/Levels/" + SceneManager.GetActiveScene().name); 
+        yield return new WaitForSecondsRealtime(0.2f);
+        GameManager.instance.SetTimeScale(1f, 0.2f);
         
     }
 

@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [SerializeField] private ResetLevel resetLevel;
     [SerializeField] private GameObject player;
-    private Animator animator;
-    private SethPlayerTest movement;
-
-    private Rigidbody2D rb;
 
     [SerializeField]
     private float
@@ -24,13 +21,6 @@ public class Health : MonoBehaviour
     //Call Delegate to deal damage. Called by enemies
     public delegate void Damage(int damage);
     public static Damage takeDamage;
-
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-        movement = GetComponent<SethPlayerTest>();
-        rb = GetComponent<Rigidbody2D>();
-    }
 
     /// <summary>
     /// Deal damage to the player. Called with Health.takeDamage?.Invoke(1);
@@ -52,9 +42,7 @@ public class Health : MonoBehaviour
         //Death
         if (health <= 0)
         {
-            animator.SetTrigger("Die");
-            movement.enabled = false;
-            rb.velocity = Vector2.zero;
+            
         }
     }
     /// <summary>
@@ -73,15 +61,6 @@ public class Health : MonoBehaviour
         yield return null;
         canDamage = true;
         sprite.enabled = true;
-    }
-    /// <summary>
-    /// Called by Animator
-    /// </summary>
-    private void DeathScreen()
-    {
-        //DeathManager.enableScreen?.Invoke();
-        animator.enabled = false;
-        //SceneLoader.loadScene?.Invoke();
     }
     private void OnEnable()
     {

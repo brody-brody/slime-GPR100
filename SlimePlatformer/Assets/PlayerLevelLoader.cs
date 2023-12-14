@@ -20,8 +20,10 @@ public class PlayerLevelLoader : MonoBehaviour
     void Start()
     {
       //enterText = GetComponentInParent<TextMeshProUGUI>();
-      enterText.enabled = false;
-      UIParent.SetActive(false);
+        enterText.enabled = false;
+        UIParent.SetActive(false);
+        player = FindObjectOfType<SethPlayerTest>().gameObject;
+
     }
 
     // Update is called once per frame

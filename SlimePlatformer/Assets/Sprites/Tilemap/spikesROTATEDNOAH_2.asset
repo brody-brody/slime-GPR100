@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: spikesROTATEDNOAH_2
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 394438206, guid: 77f58a63480964a2f85b4b934dc6e318, type: 3}
+  m_Sprite: {fileID: -1808435016, guid: 0e76a0e05878b4b7a8523d4c8f922ef6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

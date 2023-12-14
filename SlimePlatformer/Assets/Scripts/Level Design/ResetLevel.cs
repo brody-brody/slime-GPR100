@@ -37,7 +37,7 @@ public class ResetLevel : MonoBehaviour
     }
 
     // when function is ran, time is slowed to 1/10 speed, the camera is locked in place, and the fallDeath coroutine is ran
-    void Death()
+    public void Death()
     {
         GameManager.instance.SetTimeScale(0.1f, 0.01f);
         camera.GetComponent<SimpleCamera>().Lock(true);

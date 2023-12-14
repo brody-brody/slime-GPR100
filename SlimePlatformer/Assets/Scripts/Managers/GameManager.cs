@@ -1,10 +1,16 @@
+using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
 
     public Transform player;
     // this will handle all the game stuff - ssseth triidnelssfdale

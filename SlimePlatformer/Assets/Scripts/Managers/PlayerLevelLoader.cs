@@ -23,7 +23,6 @@ public class PlayerLevelLoader : MonoBehaviour
         enterText.enabled = false;
         UIParent.SetActive(false);
         player = FindObjectOfType<SethPlayerTest>().gameObject;
-
     }
 
     // Update is called once per frame

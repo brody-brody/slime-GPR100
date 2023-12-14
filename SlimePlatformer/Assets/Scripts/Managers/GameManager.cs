@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
         player = FindObjectOfType<SethPlayerTest>().transform;
     }
 
+    private void Start()
+    {
+        Time.timeScale = 1;
+    }
+
     
     /// <summary>
     /// This is responsible for calling coroutine responsible for lerping timescale. 

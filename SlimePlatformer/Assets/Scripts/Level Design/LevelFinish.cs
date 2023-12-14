@@ -28,6 +28,8 @@ public class LevelFinish : MonoBehaviour
     // on collision with the end flag, disable movement, enable finish menu, suspend velocity, and start coroutine ShowCoins
     private void OnTriggerEnter2D(Collider2D other) 
 	{
+        int newCoins = 0;
+
         if(playerTouchedMe) 
             return;
         // derp
@@ -44,17 +46,30 @@ public class LevelFinish : MonoBehaviour
         Debug.Log(SceneManager.GetActiveScene().name + " saved with " + gameManager.coins + " coins");
         
         levelExists = false;
-        foreach (var LevelData in LevelData.levelInfo)
+        foreach (var data in LevelData.levelInfo)
         {
-            if (LevelData.levelName == SceneManager.GetActiveScene().name)
+            if (data.levelName == SceneManager.GetActiveScene().name)
             {
-                if (gameManager.coins > LevelData.coins)
-                    LevelData.coins = gameManager.coins;
-                    levelExists = true;
+                if (gameManager.coins > data.coins)
+                {
+                    newCoins = gameManager.coins - data.coins;
+                    Debug.Log("player collected " + newCoins + " new coins this level\n" + gameManager.coins + " gm\n" + data.coins +" data");
+                    data.coins = gameManager.coins;
+                }
+                levelExists = true;
             }
         }
         if (!levelExists)
+        {
             LevelData.levelInfo.Add(levelComplete);
+            LevelData.totalCoins += gameManager.coins;
+            Debug.Log(LevelData.totalCoins + " coins total");
+        }
+        else if (levelExists)
+        {
+            LevelData.totalCoins += newCoins;
+            Debug.Log(LevelData.totalCoins + " coins total");
+        }
     }
 
     // wait 2 seconds, show first coin if collected with camera shake, wait a second, etc etc

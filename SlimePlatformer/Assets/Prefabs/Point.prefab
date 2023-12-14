@@ -42,14 +42,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4693605109969748311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7a7059c76fe741faa24ca9991a2c783, type: 3}
+  m_Script: {fileID: 11500000, guid: c5e2090e756b9d64cabcad08ebc0fe28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enterenceType: 0
   moveSpeed: 30
   exitDirection: -1
+  pipeBoostUpForce: 17
   source: {fileID: 3480277359793907163}
-  enterSound: {fileID: 8300000, guid: ff05ae6651d6f479792188228738a5f2, type: 3}
+  enterSound: {fileID: 8300000, guid: 859633a347bc6441faf224681ce405c9, type: 3}
   reachPointSound: {fileID: 8300000, guid: d3972efd626064116ba871a0eab31a4c, type: 3}
   exitSound: {fileID: 8300000, guid: 7a893ec21770142048b5a77178a87619, type: 3}
   railSound: {fileID: 8300000, guid: 6d290905ac259400082aa674663cb39e, type: 3}

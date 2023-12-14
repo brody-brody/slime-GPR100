@@ -42,12 +42,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1361318498032595081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7a7059c76fe741faa24ca9991a2c783, type: 3}
+  m_Script: {fileID: 11500000, guid: c5e2090e756b9d64cabcad08ebc0fe28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enterenceType: 3
   moveSpeed: 30
   exitDirection: 1
+  pipeBoostUpForce: 17
   source: {fileID: 39390952826929281}
   enterSound: {fileID: 8300000, guid: 859633a347bc6441faf224681ce405c9, type: 3}
   reachPointSound: {fileID: 8300000, guid: d3972efd626064116ba871a0eab31a4c, type: 3}

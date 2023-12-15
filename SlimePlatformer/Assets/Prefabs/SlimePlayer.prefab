@@ -193,7 +193,7 @@ MonoBehaviour:
     m_Bits: 128
   gravityMultiplier: 5.5
   stickToNormalForce: 15
-  airControl: 3
+  airControl: 15
   maxAirVelocity: 15
   sideJumpForce: 5
   jumpUpForce: 10
@@ -330,6 +330,8 @@ MonoBehaviour:
   resetLevel: {fileID: 0}
   player: {fileID: 774606685574183679}
   animator: {fileID: 9077305388564088088}
+  hurtClip: {fileID: 8300000, guid: 6ffa0c1142f2541b1a98bf17eff701bb, type: 3}
+  hurtSource: {fileID: 1547813041491555420}
   invFrames: 20
   interval: 0.05
   sprite: {fileID: 851340390113898137}

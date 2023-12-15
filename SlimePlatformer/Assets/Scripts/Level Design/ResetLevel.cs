@@ -19,6 +19,7 @@ public class ResetLevel : MonoBehaviour
     {
         camera = FindObjectOfType<SimpleCamera>();
         _system = FindObjectOfType<system>();
+        player = FindObjectOfType<SethPlayerTest>().gameObject;
     }
     // constantly testing if the player hits the r key, and runs Restart() if they do
     void Update()

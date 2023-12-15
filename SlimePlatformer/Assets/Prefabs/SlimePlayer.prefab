@@ -197,7 +197,7 @@ MonoBehaviour:
   maxAirVelocity: 15
   sideJumpForce: 5
   jumpUpForce: 10
-  additionalJumpForce: 40
+  additionalJumpForce: 35
   jumpTime: 0.5
   jumpBufferTime: 0.1
   magmaParticles: {fileID: 6465938786198259499}

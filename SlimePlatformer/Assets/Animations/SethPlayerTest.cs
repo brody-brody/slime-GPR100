@@ -197,14 +197,15 @@ public class SethPlayerTest : MonoBehaviour
 
             Debug.Log("Sign of Vel: " + Mathf.Sign(rb.velocity.x) + " Sign of X INPUT: " + Mathf.Sign(xInput));
 
-            if(Mathf.Sign(rb.velocity.x) != Mathf.Sign(xInput))
+            if(Mathf.Sign(rb.velocity.x) != Mathf.Sign(xInput) || Mathf.Abs(rb.velocity.x) < 0.01f)
             {
                 allowAirControl = true;
             }
 
+            Vector2 flatVelocity = new Vector2(rb.velocity.x, 0.0f);
             Vector2 desiredVel = Vector2.right * airControl * xInput;
             // slight air control
-            if(allowAirControl) rb.AddForce(desiredVel - rb.velocity, ForceMode2D.Force);
+            if(allowAirControl) rb.AddForce(desiredVel - flatVelocity, ForceMode2D.Force);
             //}
 
         }

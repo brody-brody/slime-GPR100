@@ -40,6 +40,7 @@ public class LevelFinish : MonoBehaviour
         finishMenu.SetActive(true);
         playerMovement.GetComponent<SethPlayerTest>().SuspendAll();
         StartCoroutine(ShowCoins());
+        gameManager.OnFinishLevel();
 
         LevelData.LevelStorage levelComplete = new LevelData.LevelStorage(SceneManager.GetActiveScene().name, gameManager.coins);
         

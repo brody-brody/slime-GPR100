@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] private AudioClip coinSound;
-    [SerializeField] private AudioSource coinSource;
+    [SerializeField] private AudioClip levelFinishSound;
+    [SerializeField] private AudioSource levelSoundSource;
 
 
     public Transform player;
@@ -35,11 +36,16 @@ public class GameManager : MonoBehaviour
     {
         coins++;
 
-        if (!coinSource) {
+        if (!levelSoundSource) {
             Debug.Log("so there's no audio source on the game manager.");
             return;
         }
-        coinSource.PlayOneShot(coinSound);
+        levelSoundSource.PlayOneShot(coinSound);
+    }
+
+    public void OnFinishLevel()
+    {
+        levelSoundSource.PlayOneShot(levelFinishSound);
     }
 
     /// <summary>

@@ -4015,63 +4015,6 @@ MonoBehaviour:
   coin1: {fileID: 689346871}
   coin2: {fileID: 689346870}
   coin3: {fileID: 689346869}
---- !u!1001 &1763005511
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.2172008
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.88939184
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3308144079327940983, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6517858593175450838, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
-      propertyPath: m_Name
-      value: Snail Parent
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c92c2823cda784d5abb14d34731ff04e, type: 3}
 --- !u!1 &1768034185
 GameObject:
   m_ObjectHideFlags: 0
@@ -4305,11 +4248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.27
+      value: -7.7299995
       objectReference: {fileID: 0}
     - target: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.49
+      value: -0.5100002
       objectReference: {fileID: 0}
     - target: {fileID: 1638331064029198189, guid: 37d0158fb25ca3f46b77f03c8d113042, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4513,6 +4456,7 @@ MonoBehaviour:
   coinSound: {fileID: 8300000, guid: 8b285aa00e2034ea5bf01bbeae8aa871, type: 3}
   levelFinishSound: {fileID: 8300000, guid: 7d278e594648040729e730dc9a514a78, type: 3}
   levelSoundSource: {fileID: 2027732497}
+  coinParticle: {fileID: 4252507633956785281, guid: dc445a483988149fa970755cfa8dc627, type: 3}
   player: {fileID: 0}
   coins: 0
 --- !u!114 &2027732495
@@ -5033,4 +4977,3 @@ SceneRoots:
   - {fileID: 1973213741}
   - {fileID: 1230589805}
   - {fileID: 841196715}
-  - {fileID: 1763005511}

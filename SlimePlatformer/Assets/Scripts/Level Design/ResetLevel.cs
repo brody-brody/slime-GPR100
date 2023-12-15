@@ -29,6 +29,8 @@ public class ResetLevel : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Escape)) {
             _system.GetComponent<system>().ClearVariable();
+            LevelData.totalCoins = 0;
+            LevelData.levelInfo.Clear();
             SceneManager.LoadScene("MenuScene");
         }
     }

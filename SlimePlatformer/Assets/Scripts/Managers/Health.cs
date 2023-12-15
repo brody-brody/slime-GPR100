@@ -40,12 +40,16 @@ public class Health : MonoBehaviour
         animator.SetInteger("Health", health);
 
         //Start flashing
-        StartCoroutine(IFrame());
+        if (health > 0)
+            StartCoroutine(IFrame());
+        else
+            StopAllCoroutines();
 
         //Death
         if (health <= 0)
         {
-            resetLevel.Death();
+            if (!resetLevel) resetLevel = FindObjectOfType<ResetLevel>();
+            resetLevel.Death(ResetLevel.DeathType.Enemy);
         }
     }
     /// <summary>

@@ -99,6 +99,8 @@ public class SethPlayerTest : MonoBehaviour
         rb.isKinematic = true;
         collider.enabled = false;
         rb.velocity = Vector2.zero;
+        magmaParticles.Stop();
+        jumpTrail.emitting = false;
     }
 
     /// <summary>

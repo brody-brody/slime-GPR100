@@ -10,6 +10,7 @@ public class PlayerAnimationHandler : MonoBehaviour
     [SerializeField] private SpriteRenderer renderer;
     [SerializeField] private float upSmoothingInAir = 2.2f;
     [SerializeField] private float upSmoothingOnGround = 0.25f;
+    [SerializeField] private ParticleSystem deathParticles;
 
     [SerializeField] private Sprite spriteLeft;
     [SerializeField] private Sprite spriteRight;
@@ -90,5 +91,22 @@ public class PlayerAnimationHandler : MonoBehaviour
 
         // Smooth the rotation
         targetRotation.transform.localRotation = Quaternion.Lerp(fromQuat, toQuat, Time.deltaTime * smoothingFactor);
+    }
+
+    public void CallSpikeDeath()
+    {
+        renderer.enabled = false;
+        deathParticles.Play();
+    }
+
+    public void CallFallDeath()
+    {
+        myAnimator.SetTrigger("Die");
+    }
+
+    public void CallEnemyDeath()
+    {
+        renderer.enabled = false;
+        deathParticles.Play();
     }
 }

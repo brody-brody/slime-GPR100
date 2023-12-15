@@ -23,6 +23,9 @@ public class Sentry : MonoBehaviour
     [SerializeField] private float fireRate = 3;
     [SerializeField] private float rotationSpeed = 10;
 
+    [SerializeField] private AudioClip fireClip;
+    [SerializeField] private AudioSource fireSource;
+
 
     private float rotationModifier = 180;
     private float fireRateTime = 3;
@@ -94,6 +97,8 @@ public class Sentry : MonoBehaviour
         fireRateTime -= Time.deltaTime;
         if (fireRateTime < 0)
         {
+
+            fireSource.PlayOneShot(fireClip);
             //Spawn bullet and get its foward direction at the time of spawning
             currentProjectile = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation).GetComponent<Projectile>();
             currentProjectile.target = spawnPoint.up;

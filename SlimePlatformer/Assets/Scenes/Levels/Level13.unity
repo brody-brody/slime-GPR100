@@ -10385,6 +10385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 774606686323517572}
+  isSpikes: 1
 --- !u!66 &878397485
 CompositeCollider2D:
   m_ObjectHideFlags: 0
@@ -10983,6 +10984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 774606686323517572}
+  isSpikes: 0
 --- !u!212 &921891115
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19171,6 +19173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 774606686323517572}
+  isSpikes: 0
 --- !u!4 &2027732496
 Transform:
   m_ObjectHideFlags: 0

@@ -23,7 +23,6 @@ public class MenuCoinUI : MonoBehaviour
     {
         if(addedCoin == false)
         {
-            LevelData.totalCoins = 29;
             addedCoin = true;
         }
         numCoins.SetText((LevelData.totalCoins).ToString());

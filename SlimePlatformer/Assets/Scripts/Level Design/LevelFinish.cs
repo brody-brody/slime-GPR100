@@ -19,6 +19,7 @@ public class LevelFinish : MonoBehaviour
     // on start, grab player movement script, set the players coins to 0, and set the finish flag to false
     private void Start() {
         playerMovement = player.GetComponent<SethPlayerTest>();
+        gameManager = FindObjectOfType<GameManager>();
         coin1.enabled = false;
         coin2.enabled = false;
         coin3.enabled = false;

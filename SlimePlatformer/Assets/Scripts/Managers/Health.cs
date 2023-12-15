@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private ResetLevel resetLevel;
     [SerializeField] private GameObject player;
+    [SerializeField] private Animator animator;
 
     [SerializeField]
     private float
@@ -35,6 +36,8 @@ public class Health : MonoBehaviour
         //Deal damage
         canDamage = false;
         health -= damage;
+
+        animator.SetInteger("Health", health);
 
         //Start flashing
         StartCoroutine(IFrame());

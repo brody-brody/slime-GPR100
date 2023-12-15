@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip coinSound;
     [SerializeField] private AudioClip levelFinishSound;
     [SerializeField] private AudioSource levelSoundSource;
+    public ParticleSystem coinParticle;
 
 
     public Transform player;

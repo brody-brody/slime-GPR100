@@ -85,6 +85,8 @@ public class SethPlayerTest : MonoBehaviour
     private float jumpBufferTimer;
     private float lastInput;
 
+    private bool allowAirControl = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -190,11 +192,22 @@ public class SethPlayerTest : MonoBehaviour
         {
             //if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(xInput) || Mathf.Abs(rb.velocity.x) < 0.1f)
             //{
-                //Debug.Log("Aircontrol baby T-T UWU WUUWUW OWO ");
-                //if (rb.velocity.magnitude > maxAirVelocity)
-                    rb.AddForce(Vector2.right * airControl * xInput, ForceMode2D.Force);
+            //Debug.Log("Aircontrol baby T-T UWU WUUWUW OWO ");
+            //if (rb.velocity.magnitude > maxAirVelocity)
+
+            Debug.Log("Sign of Vel: " + Mathf.Sign(rb.velocity.x) + " Sign of X INPUT: " + Mathf.Sign(xInput));
+
+            if(Mathf.Sign(rb.velocity.x) != Mathf.Sign(xInput) || Mathf.Abs(rb.velocity.x) < 0.01f)
+            {
+                allowAirControl = true;
+            }
+
+            Vector2 flatVelocity = new Vector2(rb.velocity.x, 0.0f);
+            Vector2 desiredVel = Vector2.right * airControl * xInput;
+            // slight air control
+            if(allowAirControl) rb.AddForce(desiredVel - flatVelocity, ForceMode2D.Force);
             //}
-            
+
         }
     }
 
@@ -259,8 +272,9 @@ public class SethPlayerTest : MonoBehaviour
             return;
         }
 
+        allowAirControl = false;
         // stop the magma particles if the players grounded
-        if(isGrounded && !jumpFlag) magmaParticles.Stop();
+        if (isGrounded && !jumpFlag) magmaParticles.Stop();
 
         isGrounded = true;
 

@@ -23,6 +23,9 @@ public class CollectibleTrigger : MonoBehaviour
 	{
 		if (other.gameObject.layer != 3)
 			return;
+
+		if(gameManager.coinParticle != null)
+			Instantiate(gameManager.coinParticle, transform.position, Quaternion.identity);
 		// remove coin from scene, and then change the color of one of the canvas images
 		// to properly represent number of coins collected.
 		if (gameManager.coins == 0)

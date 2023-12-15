@@ -8,6 +8,9 @@ public class Health : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private Animator animator;
 
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioSource hurtSource;
+
     [SerializeField]
     private float
         invFrames = 2,
@@ -58,6 +61,8 @@ public class Health : MonoBehaviour
     /// <returns></returns>
     IEnumerator IFrame()
     {
+        hurtSource.PlayOneShot(hurtClip);
+
         //Player Flash
         for (int i = 0; i < invFrames; i++)
         {

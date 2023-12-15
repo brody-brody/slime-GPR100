@@ -15,6 +15,11 @@ public class PlayerAnimationHandler : MonoBehaviour
     [SerializeField] private Sprite spriteLeft;
     [SerializeField] private Sprite spriteRight;
 
+    [SerializeField] private AudioSource deathSoundsSource;
+    [SerializeField] private AudioClip deathEnemySoundClip;
+    [SerializeField] private AudioClip deathFallSoundClip;
+    [SerializeField] private AudioClip deathSpikeSoundClip;
+
     private SethPlayerTest movement;
 
     private bool jumping;
@@ -97,16 +102,22 @@ public class PlayerAnimationHandler : MonoBehaviour
     {
         renderer.enabled = false;
         deathParticles.Play();
+
+        deathSoundsSource.PlayOneShot(deathSpikeSoundClip);
     }
 
     public void CallFallDeath()
     {
         myAnimator.SetTrigger("Die");
+
+        deathSoundsSource.PlayOneShot(deathFallSoundClip);
     }
 
     public void CallEnemyDeath()
     {
         renderer.enabled = false;
         deathParticles.Play();
+
+        deathSoundsSource.PlayOneShot(deathEnemySoundClip);
     }
 }

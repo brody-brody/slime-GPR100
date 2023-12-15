@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] private AudioClip coinSound;
+    [SerializeField] private AudioSource coinSource;
+
 
     public Transform player;
     // this will handle all the game stuff - ssseth triidnelssfdale
@@ -28,7 +31,17 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    
+    public void AddCoin()
+    {
+        coins++;
+
+        if (!coinSource) {
+            Debug.Log("so there's no audio source on the game manager.");
+            return;
+        }
+        coinSource.PlayOneShot(coinSound);
+    }
+
     /// <summary>
     /// This is responsible for calling coroutine responsible for lerping timescale. 
     /// </summary>

@@ -27,18 +27,18 @@ public class CollectibleTrigger : MonoBehaviour
 		// to properly represent number of coins collected.
 		if (gameManager.coins == 0)
 		{
-			gameManager.coins++;
+			gameManager.AddCoin();
 			coin1.GetComponent<Image>().color = new Color32(255,255,255,255);
 		}
 		else if (gameManager.coins == 1)
 		{
-			gameManager.coins++;
-			coin2.GetComponent<Image>().color = new Color32(255,255,255,255);
+            gameManager.AddCoin();
+            coin2.GetComponent<Image>().color = new Color32(255,255,255,255);
 		}
 		else if (gameManager.coins == 2)
 		{
-			gameManager.coins++;
-			coin3.GetComponent<Image>().color = new Color32(255,255,255,255);
+            gameManager.AddCoin();
+            coin3.GetComponent<Image>().color = new Color32(255,255,255,255);
 		}
 		Destroy(gameObject);
 	}

@@ -11,6 +11,9 @@ public class ResetLevel : MonoBehaviour
     private SimpleCamera camera;
     private system _system;
 
+    public bool isSpikes = false;
+    private bool isResetting = false;
+
     // find the camera object
     void Start()
     {
@@ -36,24 +39,47 @@ public class ResetLevel : MonoBehaviour
         GameManager.instance.SetTimeScale(1f, 0.5f);
     }
 
-    // when function is ran, time is slowed to 1/10 speed, the camera is locked in place, and the fallDeath coroutine is ran
-    public void Death()
+    public enum DeathType
     {
+        Spike,
+        Enemy,
+        Fall
+    }
+
+    // when function is ran, time is slowed to 1/10 speed, the camera is locked in place, and the fallDeath coroutine is ran
+    public void Death(DeathType deathType)
+    {
+        if (isResetting) return;
+        isResetting = true;
+
         GameManager.instance.SetTimeScale(0.1f, 0.01f);
+        player.GetComponent<SethPlayerTest>().SuspendAll();
         camera.GetComponent<SimpleCamera>().Lock(true);
         StartCoroutine(fallDeath());
+
+        PlayerAnimationHandler animationHandler = player.GetComponent<PlayerAnimationHandler>();
+        switch (deathType)
+        {
+            case DeathType.Spike:
+                animationHandler.CallSpikeDeath();
+                break;
+            case DeathType.Enemy:
+                animationHandler.CallEnemyDeath();
+                break;
+            case DeathType.Fall:
+                animationHandler.CallFallDeath();
+                break;
+        }
     }
 
     // Wait two seconds, revert the time scale to normal speed, and then reload the current scene
     IEnumerator fallDeath()
     {
-        yield return new WaitForSecondsRealtime(2f);
-        GameManager.instance.SetTimeScale(1f, 0.01f);
-        yield return new WaitForSecondsRealtime(0.2f);
+        yield return new WaitForSecondsRealtime(1f);
+        GameManager.instance.SetTimeScale(1f, 0.4f);
+
+        yield return new WaitForSecondsRealtime(1f);
         SceneManager.LoadScene("Scenes/Levels/" + SceneManager.GetActiveScene().name); 
-        yield return new WaitForSecondsRealtime(0.2f);
-        GameManager.instance.SetTimeScale(1f, 0.2f);
-        
     }
 
     // runs Death() function if player enters the death floor trigger
@@ -61,6 +87,8 @@ public class ResetLevel : MonoBehaviour
 	{
         if (other.transform != player.transform) 
                 return;
-        Death();
+
+        if (isSpikes) Death(DeathType.Spike);
+        else Death(DeathType.Fall);
     }
 }
